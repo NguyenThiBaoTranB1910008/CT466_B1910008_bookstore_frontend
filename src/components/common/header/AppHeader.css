@@ -1,0 +1,14 @@
+.menu{
+    text-decoration: none;
+    color: #0060ae;
+    font-size: 18px;
+}
+
+.menu i{
+    margin-right: 5px;
+}
+
+.fa-cart-shopping{
+    color: #0060ae;
+    font-size: 25px;
+}
