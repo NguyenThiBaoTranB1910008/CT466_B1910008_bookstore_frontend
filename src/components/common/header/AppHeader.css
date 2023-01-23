@@ -12,3 +12,23 @@
     color: #0060ae;
     font-size: 25px;
 }
+
+.sub-user{
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    position: absolute;
+    padding: 10px;
+    top: 173%;
+    right: -8%;
+    box-shadow: 0 0 16px 0 rgb(0 0 0 / 12%), 0 16px 16px 0 rgb(0 0 0 / 24%);
+}
+
+.hello-text{
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0 25px;
+    text-align: left;
+    color: #151515;
+    margin-bottom: 14px;
+}

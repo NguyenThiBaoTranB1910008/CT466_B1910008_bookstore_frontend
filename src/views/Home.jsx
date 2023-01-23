@@ -10,7 +10,6 @@ function Home({books,currencyFormat}){
       try{
         const apinewbooks = await ProductService.getLimit()
         setNewBooks(apinewbooks)
-        console.log(apinewbooks)
       }
       catch(error){
         console.log(error);
@@ -69,15 +68,6 @@ function Home({books,currencyFormat}){
               <ListBrand/>
               <hr/>
             </div>
-            <div className="connect row">
-                <div className="caterory-title col-4 pt-3">
-                    <h2>Đăng ký nhận thông báo mới</h2>
-                </div>
-                <div className="input-group mb-3 col-8">
-                    <input type="text" className="form-control connect-input" placeholder="Nhập email để kết nối với chúng tôi" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
-                    <span className="input-group-text" id="connect-button">Đăng ký</span>
-                </div>
-          </div>
         </div>
     )
 }

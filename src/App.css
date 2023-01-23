@@ -5,7 +5,7 @@
   text-align: left;
   font-family: 'Nunito', sans-serif;
   list-style-type: none;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 img{
@@ -15,8 +15,12 @@ border-radius: 5px;
 }
 
 .navbar-brand img{
-  width: 185px;
+  /* width: 185px; */
   height: 42px;
+}
+
+.logo{
+  width: 58px;
 }
 
 header{
@@ -75,7 +79,8 @@ header form{
 }
 
 .main{
-padding-top: 150px;
+  padding-top: 150px;
+  padding-bottom: 50px;
 }
 
 button.carousel-control-prev-next-icon{
@@ -221,10 +226,14 @@ border: 1px solid  #e0dede;
 
 .connect{
   background-color: #ccdfef;
-  padding: 10px 50px 10px;
+  padding: 20px 50px 20px;
   display: flex;
   flex-wrap: nowrap;
-  margin-bottom: 20px;
+}
+
+.connect .row{
+  display: flex;
+  justify-content: space-between;
 }
 
 .connect-input{
@@ -234,15 +243,15 @@ border: 1px solid  #e0dede;
 }
 
 .input-group{
-  padding: 10px 0 20px;
-  width: 65% !important;
+  padding: 15px 0 25px;
+  width: 50% !important;
   height: 50px;
 }
 
 #connect-button{
 border-top-right-radius: 10px;
 border-bottom-right-radius: 10px;
-margin-right: 50px;
+/* margin-right: 50px; */
 background-color: #0060ae;
 color: #fff;
 font-weight: 500;
@@ -263,7 +272,7 @@ margin: 0 20px;
 .footer{
   box-shadow: 0 -2px 10px #e5e5e5;
   border-bottom: 20px solid #ccdfef;
-  padding: 10px;
+  padding: 15px;
   /* margin-top: 20px; */
 }
 
@@ -274,3 +283,116 @@ display: flex;
 /* color: #ccdfef; */
 }
 
+.category-title{
+  color: #25225a;
+  font-family: 'Philosopher', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+#signup{
+  background-image: url('https://images.pexels.com/photos/4846453/pexels-photo-4846453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper{
+  overflow: hidden;
+  max-width: 390px;
+  min-width: 320px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+}
+
+form .field{
+  height: 50px;
+  margin-top: 15px;
+}
+
+form .field input{
+  height: 90%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 5px;
+  border: 1px solid #bdd4e7;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+form .field input:focus{
+  border-color: #0060ae;
+  /* box-shadow: inset 0 0 3px #fb6aae; */
+}
+
+form .field input::placeholder{
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+form .field input:focus::placeholder{
+  color: #b3b3b3;
+}
+
+.form-inner form .signup-link{
+  text-align: center;
+  margin-top: 30px;
+}
+
+form .btn{
+  height: 50px;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  background-image:  linear-gradient(to right, #0060ae, #ccdfef);
+  transition: all 0.4s ease;
+}
+
+form .btn input[type="submit"]{
+  background: none;
+  border: none;
+  color: #fff;
+  padding-left: 0;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.wrapper .title{
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+
+.form_error{
+  font-size: 12px;
+  color: #ce2415;
+}
+
+.error_input{
+  border: 1px solid #C1372A!important;
+}
+
+
+
+.login-text{
+  color: #0060ae;
+  font-size: 18px;
+}
+
+.app-button{
+  padding: 5px;
+  width: 60%;
+}
