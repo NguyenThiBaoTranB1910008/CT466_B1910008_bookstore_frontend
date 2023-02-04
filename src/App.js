@@ -9,6 +9,7 @@ import AppFooter from './components/common/footer/AppFooter';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
 import Login from './views/Login';
+import Category from './components/category/Category'
 
 function App() {
   const [state] = useContext(Context)
@@ -27,8 +28,10 @@ function App() {
         <AppHeader/>
             <Routes>
               <Route path="/login" element={<Login/>}/>
-             <Route path="/" element={<Home/>}/>
-             <Route path="/signup" element={<SignUp/>}/>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/signup" element={<SignUp/>}/>
+              <Route path="/menu" element={<Category/>}/>
+              <Route path="/menu/:q" element={<Category/>}/>
            </Routes> 
          <AppFooter/>
      </> 
