@@ -1,5 +1,6 @@
+import { notify } from "../auth.action";
 const initState = {
-    loginAccount:  ""
+    loginAccount:  localStorage.getItem('user') ?? ""
 }
 
 const LOGIN_ACTION = "login"
@@ -9,23 +10,15 @@ function reducer(state, action){
     // console.log(state.loginAccount)
     switch (action.type){
         case LOGIN_ACTION:
-            // localStorage.setItem("user", action.name);
+            localStorage.setItem("user", action.name);
             return {
                 loginAccount:action.name
             }
-            // console.log(state)
-            // break;
         case LOGOUT_ACTION:
-            // localStorage.setItem("user", action.name);
-            // state.loginAccount = action.name
-            console.log(state)
-            // break;
+            localStorage.removeItem('user');
             return {
                 loginAccount: ""
             }
-            // localStorage.removeItem('user');
-            // console.log(state)
-            // break;
         default:
             console.log("default")
     }

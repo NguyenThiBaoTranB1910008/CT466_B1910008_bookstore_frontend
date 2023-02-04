@@ -2,8 +2,11 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import userService from "../services/user.service";
+import { notify } from "../auth.action";
+import { useNavigate } from "react-router-dom";
 
-function SignUp({notify}){
+function SignUp(){
+    const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
             fullname: "",
@@ -34,6 +37,7 @@ function SignUp({notify}){
                     else{
                         await userService.create(values)
                         notify("success","Đăng ký thành công")
+                        navigate("/login")
                     }
                 }
                 catch(error){
@@ -48,7 +52,7 @@ function SignUp({notify}){
         <div id="signup">
             <div className="wrapper">
                 <div class="title-text">
-                    <div class="title signup"> Signup Form </div> : 
+                    <div class="title signup"> Signup Form </div>
              </div>
                 <form action="#" class="signup" onSubmit={formik.handleSubmit}>
                     <div class="field">
@@ -56,7 +60,7 @@ function SignUp({notify}){
                                 name="fullname" placeholder="Full name" 
                                 value={formik.values.fullname}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.fullname ? "": "error_input"}/>
+                                className={formik.errors.fullname && formik.touched.fullname && "error_input"}/>
                         {formik.errors.fullname && formik.touched.fullname && (
                             <p className="form_error">{formik.errors.fullname}</p>
                         )}
@@ -65,7 +69,7 @@ function SignUp({notify}){
                         <input type="text" name="accname" placeholder="Account name" 
                                 value={formik.values.accname}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.accname? "": "error_input"}/>
+                                className={formik.errors.accname && formik.touched.accname && "error_input"}/>
                          {formik.errors.accname && formik.touched.accname && (
                             <p className="form_error">{formik.errors.accname}</p>
                         )}
@@ -74,7 +78,7 @@ function SignUp({notify}){
                         <input type="password" name="pass" placeholder="Password" 
                                 value={formik.values.pass}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.pass ? "": "error_input"}/>
+                                className={formik.errors.pass && formik.touched.pass && "error_input"}/>
                         {formik.errors.pass && formik.touched.pass && (
                             <p className="form_error">{formik.errors.pass}</p>
                         )}
@@ -83,7 +87,7 @@ function SignUp({notify}){
                         <input type="password" name="confirm_pass" placeholder="Confirm password" 
                                 value={formik.values.confirm_pass}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.confirm_pass ? "": "error_input"}/>
+                                className={formik.errors.confirm_pass && formik.touched.confirm_pass && "error_input"}/>
                         {formik.errors.confirm_pass && formik.touched.confirm_pass && (
                             <p className="form_error">{formik.errors.confirm_pass}</p>
                         )}

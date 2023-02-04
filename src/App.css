@@ -45,7 +45,7 @@ header form{
   position: relative;
 }
 
-#header-input{
+#header-input, #admin-input{
   border: 1px solid #fff;
   border-radius: 21px ;
   background-color: #f5f5f5 ;
@@ -127,13 +127,14 @@ text-align: center;
 .caterory-item a{ 
 text-decoration: none;
 }
+
 .caterory-icon{
 font-size: 14px;
 font-weight: 700;
 color: rgba(40,30,90,.86);
 }
 
-.caterory-title h2{
+.caterory-title h2, .admin-action{
   font-size: 24px;
   font-weight: 600;
   color: #151515;
@@ -292,7 +293,7 @@ display: flex;
 }
 
 #signup{
-  background-image: url('https://images.pexels.com/photos/4846453/pexels-photo-4846453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  /* background-image: url('https://images.pexels.com/photos/4846453/pexels-photo-4846453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); */
   width: 100vw;
   height: 100vh;
   background-repeat: no-repeat;
@@ -300,6 +301,7 @@ display: flex;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #e9eff8;
 }
 
 .wrapper{
@@ -317,7 +319,7 @@ form .field{
   margin-top: 15px;
 }
 
-form .field input{
+form .field input, textarea{
   height: 90%;
   width: 100%;
   outline: none;
@@ -329,17 +331,17 @@ form .field input{
   transition: all 0.3s ease;
 }
 
-form .field input:focus{
+form .field input:focus, textarea:focus{
   border-color: #0060ae;
   /* box-shadow: inset 0 0 3px #fb6aae; */
 }
 
-form .field input::placeholder{
+form .field input::placeholder,textarea::placeholder{
   color: #999;
   transition: all 0.3s ease;
 }
 
-form .field input:focus::placeholder{
+form .field input:focus::placeholder,textarea:focus::placeholder{
   color: #b3b3b3;
 }
 
@@ -386,7 +388,6 @@ form .btn input[type="submit"]{
 }
 
 
-
 .login-text{
   color: #0060ae;
   font-size: 18px;
@@ -396,3 +397,13 @@ form .btn input[type="submit"]{
   padding: 5px;
   width: 60%;
 }
+
+.loginAndnSigUp{
+  text-align: right;
+  font-size: 14px;
+  padding-top: 15px;
+  margin-bottom: 0;
+  font-weight: 800;
+  color: #151515;
+}
+

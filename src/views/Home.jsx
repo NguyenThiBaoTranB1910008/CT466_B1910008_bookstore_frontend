@@ -3,7 +3,8 @@ import ListBrand from "../components/brand/ListBrand";
 import ListCategory from "../components/category/ListCategory";
 import { useEffect, useState } from 'react';
 import ProductService from "../services/product.service";
-function Home({books,currencyFormat}){
+import { currencyFormat } from "../auth.action";
+function Home({books}){
   const [newbooks, setNewBooks]= useState([])
   useEffect(()=>{
     async function fetchData(){

@@ -3,11 +3,26 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useContext } from 'react';
 import Context from "../../../store/Context";
+import userService from "../../../services/user.service";
+import { notify } from "../../../auth.action";
 
 function AppHeader() {
   const [showMenu, setshowMenu] = useState(false)
   const [search, setSearch] =useState(false)
   const [state,dispatch] = useContext(Context)
+  const [userName, setUserName] = useState("")
+  useEffect(()=> {
+    async function getUserName(){
+      try{
+        const userObj = await userService.checkAcc(state.loginAccount)
+        setUserName(userObj.fullname.slice(userObj.fullname.lastIndexOf(" ") +1))
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+    getUserName()
+  },[state])
 
   const headInput = () =>{
     const headInput= document.getElementById("header-input")
@@ -18,11 +33,10 @@ function AppHeader() {
   }
 
   const handlelogout = ()=>{
-    // console.log(state)
     dispatch({
       type: "logout",
-      name: ""
     })
+    notify('success',"Đăng xuất thành công")
     setshowMenu(false)
   }
   
@@ -59,7 +73,7 @@ function AppHeader() {
                       <i className="fa-solid fa-user px-1" onClick={()=>setshowMenu(!showMenu)}></i>
                       <ul className="sub-user" style={{display: (showMenu) ? "block" : "none"}} onClick={()=>setshowMenu(false)}>
                         <div className="hello-text">
-                          Hello, Trân
+                          Hello, {userName}
                         </div>
                         <Link to="/myorder">Đơn hàng của tôi</Link>
                         <li onClick={handlelogout}>Đăng xuất</li>

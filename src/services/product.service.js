@@ -18,6 +18,10 @@ class ProductService {
     async getByFilter(filter) {
         return (await this.api.post("/filter", filter)).data;
     }
+    async upload(file) {
+        console.log(`${this.api}/upload`)
+        return (await this.api.post("/upload", file)).data;
+    }
     async getLimit() {
         return (await this.api.get("/new")).data;
     }
