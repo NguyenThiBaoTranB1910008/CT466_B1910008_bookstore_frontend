@@ -24,8 +24,11 @@ class UserService {
     async getByFilter(filter) {
         return (await this.api.post("/filter", filter)).data;
     }
-    async update(data) {
+    async updateAdmin(data) {
         return (await this.api.post(`/${data.id}`, data)).data;
+    }
+    async update(data) {
+        return (await this.api.put(`/${data.id}`, data)).data;
     }
 }
 export default new UserService();

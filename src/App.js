@@ -10,6 +10,10 @@ import Home from './views/Home';
 import SignUp from './views/SignUp';
 import Login from './views/Login';
 import Category from './components/category/Category'
+import Cart from './views/Cart.jsx'
+import Detail from './views/Detail';
+
+
 
 function App() {
   const [state] = useContext(Context)
@@ -32,6 +36,8 @@ function App() {
               <Route path="/signup" element={<SignUp/>}/>
               <Route path="/menu" element={<Category/>}/>
               <Route path="/menu/:q" element={<Category/>}/>
+              <Route path="/cart" element={<Cart/>}/>
+              <Route path="/product/:id" element={<Detail/>}/>
            </Routes> 
          <AppFooter/>
      </> 

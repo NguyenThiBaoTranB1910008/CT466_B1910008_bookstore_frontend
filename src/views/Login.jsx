@@ -7,15 +7,19 @@ import { useContext } from 'react';
 import Context from "../store/Context";
 import { notify } from "../auth.action";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
+import cartService from "../services/cart.service";
+import announceService from "../services/announce.service";
 
 function Login(){ 
     const navigate = useNavigate()
     const [state,dispatch] = useContext(Context)
+    const [number, setNumber] = useState(0)
     const formik = useFormik({
         initialValues: {
             accname: "",
             pass: "",
+            remember: false
         },
         validationSchema: Yup.object({
             accname: Yup.string()
@@ -28,11 +32,28 @@ function Login(){
             const loginCheck = async () =>{
                 try{
                     const trueUser = await userService.loginCheck(values)
-                      if(trueUser){
-                          dispatch({
-                            type: "login",
-                            name: trueUser.accname
+                    // setNumber(cart)
+                    if(trueUser){
+                          var cart = await cartService.getAll(values.accname)
+                          var newnotify1 = await announceService.newNotify(values.accname)
+                          var seen = []
+                          newnotify1.map((announment)=>{
+                            if(announment.status===0)
+                            seen.push(announment.id)
                         })
+                        dispatch({
+                            type: "login",
+                            name: trueUser.accname,
+                            cartItem: cart.length,
+                            newNotify: seen
+                        })
+                        if(values.remember){
+                            localStorage.setItem("user", values.accname )
+                        }
+                        // dispatch(
+                        //    setNumber(getCartNumber())
+                        // )
+                        // console.log(cart.length)
                         notify('success',"Đăng nhập thành công")
                         navigate('/')
                       }
@@ -75,7 +96,10 @@ function Login(){
                             <p className="form_error">{formik.errors.pass}</p>
                         )}
                     </div>
-                    <div class="field btn">
+                    <div className="pt-2">
+                        <input type="checkbox" name="remember" id="" value={formik.values.remember} onChange={formik.handleChange} /> Remember me
+                    </div>
+                    <div class="field btn mt-2">
                         <input type="submit" value="Login"/>
                     </div>
                 </form>
