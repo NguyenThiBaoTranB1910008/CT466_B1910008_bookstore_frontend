@@ -599,6 +599,7 @@ li.selected, .selected{
 
 .empty-cart img{
   width: 40%;
+  max-width: 300px;
 }
 
 .empty-cart{

@@ -40,19 +40,18 @@ function Cart(){
             fetchData()
     },[changQuality]);
 
-    const  setQualityCart = async (id, quality) => {
+    const setQualityCart = async (id, quality) => {
         const cartExit = cart.find((item) => item.id === id)
-        cartExit.quality = quality
-        if (quality<=0) {
-            quality = 0
-        } else {
-           try {
-                await CartService.update(id, cartExit);    
-            } catch (error) {
-                console.log(error);
-            }
-            setChangQuality(!changQuality)
+        if (quality <=0 ) 
+            cartExit.quality = 1
+        else 
+            cartExit.quality = quality
+        try {
+            await CartService.update(id, cartExit);    
+        } catch (error) {
+            console.log(error);
         }
+        setChangQuality(!changQuality)
     }
 
     const deleteCartItem = (id) =>{
@@ -76,12 +75,12 @@ function Cart(){
         {/* <ServiceModal showModal={modal} deleteCartItem={deleteCartItem} closeModal={closeModal}/> */}
         <div className="container main">
             <div className="row cart">
-                <div className="col-8">
                     {(cart.length===0) ? <EmptyCart imgUrl={"https://www.gramedia.com/assets/illustrations/empty-cart.png"}
                                                     title = {"Giỏ hàng của bạn đang rỗng"}/> :
+                        <>
+                <div className="col-8">
                         <ListCartItem cart={cart} currencyFormat={currencyFormat} setQualityCart={setQualityCart} deleteCartItem={deleteCartItem}/>
-                    }
-                     </div>
+                    </div>
                 <div className="col-1"></div>
                 <div className="col-3 cart-total">
                     <div className="cart-total-header">
@@ -95,6 +94,8 @@ function Cart(){
                         <Link to={(state.loginAccount == "") ? "/login" :"/order"} state={{cart: cart}}><button>ĐẶT HÀNG</button></Link>  
                     </div>
                 </div>
+                </>
+                }
                 </div> 
             </div>
         </>

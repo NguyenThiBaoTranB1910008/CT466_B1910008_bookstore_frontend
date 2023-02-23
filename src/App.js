@@ -12,6 +12,14 @@ import Login from './views/Login';
 import Category from './components/category/Category'
 import Cart from './views/Cart.jsx'
 import Detail from './views/Detail';
+import MyOrder from './views/MyOrder';
+import Navigation from './components/admin/Navigation';
+import AdminBookDetail from './components/admin/AdminBookDetail';
+import BookManagement from './components/admin/BookManagement'
+import UserManagement from './components/admin/UserManagement';
+import OrderManagment from './components/admin/OrderManagment';
+import CheckOut from './views/CheckOut';
+import Account from './views/Account';
 
 
 
@@ -29,7 +37,24 @@ function App() {
                       draggable
                       pauseOnHover
                       theme="light"/>
-        <AppHeader/>
+        {
+          state.loginAccount == "admin" ?  
+          <>
+            <div className="container-fluid p-0">
+              <div className="row p-0">
+                <Navigation/>
+                <Routes>
+                  <Route path="/" element={<BookManagement/>}/>
+                  <Route path="/user" element={<UserManagement/>}/>
+                  <Route path="/editbook" element={<AdminBookDetail/>}/>
+                  <Route path="/order" element={<OrderManagment/>}/>
+                </Routes>
+              </div>
+            </div>
+          </>
+          :
+          <>
+          <AppHeader/>
             <Routes>
               <Route path="/login" element={<Login/>}/>
               <Route path="/" element={<Home/>}/>
@@ -38,8 +63,12 @@ function App() {
               <Route path="/menu/:q" element={<Category/>}/>
               <Route path="/cart" element={<Cart/>}/>
               <Route path="/product/:id" element={<Detail/>}/>
+              <Route path="/order" element={<CheckOut/>}/>
+              <Route path="/myorder" element={<Account/>}/>
            </Routes> 
          <AppFooter/>
+         </>
+        }
      </> 
   );
 }
