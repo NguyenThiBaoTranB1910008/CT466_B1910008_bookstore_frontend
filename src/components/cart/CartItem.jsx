@@ -1,5 +1,5 @@
 import { currencyFormat } from "../../auth.action"
-function CartItem({cartItem,setQualityCart,deleteCartItem}){
+function CartItem({cartItem,setQualityCart,setActiveModal}){
     return(
         <div className="cart-item row">
             <div className="cart-item-img">
@@ -24,7 +24,7 @@ function CartItem({cartItem,setQualityCart,deleteCartItem}){
                 {currencyFormat(cartItem.quality * cartItem.price)}
             </div>
             <div className="cart-item-trash col-1">
-                <i class="fa-regular fa-trash-can" onClick={()=>{deleteCartItem(cartItem.id)}}></i>
+                <i class="fa-regular fa-trash-can" onClick={()=>{setActiveModal({active: true, item: cartItem})}}></i>
              </div>
         </div>
     )

@@ -19,7 +19,7 @@ function Login(){
         initialValues: {
             accname: "",
             pass: "",
-            remember: false
+            remember: true,
         },
         validationSchema: Yup.object({
             accname: Yup.string()
@@ -32,7 +32,6 @@ function Login(){
             const loginCheck = async () =>{
                 try{
                     const trueUser = await userService.loginCheck(values)
-                    // setNumber(cart)
                     if(trueUser){
                           var cart = await cartService.getAll(values.accname)
                           var newnotify1 = await announceService.newNotify(values.accname)
@@ -50,12 +49,11 @@ function Login(){
                         if(values.remember){
                             localStorage.setItem("user", values.accname )
                         }
-                        // dispatch(
-                        //    setNumber(getCartNumber())
-                        // )
-                        // console.log(cart.length)
                         notify('success',"Đăng nhập thành công")
-                        navigate('/')
+                        if(trueUser.isadmin)
+                            navigate("/admin")
+                        else    
+                            navigate("/")
                       }
                       else{
                           notify('error',"Tên đăng nhập hoặc mật khẩu không đúng")
@@ -68,6 +66,7 @@ function Login(){
             loginCheck()
           }
       });
+
     return(
         <>
         <div id="signup">
@@ -97,7 +96,7 @@ function Login(){
                         )}
                     </div>
                     <div className="pt-2">
-                        <input type="checkbox" name="remember" id="" value={formik.values.remember} onChange={formik.handleChange} /> Remember me
+                        <input type="checkbox" name="remember" checked = {formik.values.remember} value={formik.values.remember} onChange={formik.handleChange} /> Remember me
                     </div>
                     <div class="field btn mt-2">
                         <input type="submit" value="Login"/>

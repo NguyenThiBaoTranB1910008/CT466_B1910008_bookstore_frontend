@@ -39,8 +39,10 @@ function OrderManagment(){
         var detail = document.getElementsByClassName(`${id}`)
         if(detail[0].classList.contains('none')){
             detail[0].classList.remove('none')
+            detail[0].style.maxHeight = '500px'
         }else{
             detail[0].classList.add('none')
+            detail[0].style.maxHeight = '0'
         }
     }
 
@@ -59,6 +61,7 @@ function OrderManagment(){
 
         const confirmOrder = async() =>{
             try{
+                notify("success", "Xác nhận đơn hàng thành công")
                 await orderService.confirm(a)
                 await announceService.create(announment)
                 setFilter({...filter, changeData: !filter.changeData})
@@ -81,6 +84,7 @@ function OrderManagment(){
 
         const confirmOrder = async() =>{
             try{
+                notify("success", "Đơn hàng đã được hủy bỏ")
                 await orderService.confirm({ id: id, type: "cancel"})
                 await announceService.create(announment)
                 setFilter({...filter, changeData: !filter.changeData})
@@ -99,19 +103,21 @@ function OrderManagment(){
 
     return(
         <>
-        <div className="col-10 px-5 pt-3 order-overview ">
-            <h1 className='admin-action'>Đơn hàng</h1>
-            <div className="order-item admin-search">
-                <div className="col-3">
-                <select class="form-select" name="country" id="order-filter">
-                      <option value="" >Trạng thái</option>
-                      <option value="wait" >Chờ xác nhận</option>
-                      <option value="process">Đang giao</option>
-                      <option value="shipped">Hoàn thành</option>
-                      <option value="cancel">Đã hủy</option>
-                </select>  
+        <div className="order-overview ">
+            <div className="admin-search">
+                <h1 className='admin-action '>Đơn hàng</h1>
+                <div className="">
+                    <div className="pe-4">
+                    <select class="form-select" name="country" id="order-filter" onChange={handleFilter}>
+                        <option value="" >Tất cả</option>
+                        <option value="wait" >Chờ xác nhận</option>
+                        <option value="process">Đang giao</option>
+                        <option value="shipped">Hoàn thành</option>
+                        <option value="cancel">Đã hủy</option>
+                    </select>  
+                    </div>
+                    {/* <div className="admin-add-button mx-2" onClick={handleFilter}>Lọc</div> */}
                 </div>
-                <div className="admin-add-button mx-2" onClick={handleFilter}>Lọc</div>
             </div>
             <div className="header-cart-item row header-order mt-3">
                     <div className="col-1">id</div>

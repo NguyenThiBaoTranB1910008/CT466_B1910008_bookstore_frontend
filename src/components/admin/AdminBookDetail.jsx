@@ -8,9 +8,8 @@ import productService from "../../services/product.service";
 import { notify } from "../../auth.action";
 import { useNavigate } from 'react-router-dom';
 
-function AdminBookDetail(){
-    const location = useLocation()
-    const book = location.state
+function AdminBookDetail({editbook}){
+    const book = editbook
     const [selectedImage, setSelectedImage] = useState({
         imgUrl:  book ? book.imageUrl : "",
         changeUrl:  false});
@@ -68,7 +67,7 @@ function AdminBookDetail(){
             // imageUrl:  Yup.string().required("imageUrl is required"),
             price:  Yup.number().required("Price is required"),
             category: Yup.string().required("Category is required"),
-            page: Yup.string().required("page is required"),
+            page: Yup.number().required("page is required").positive("Page must be greater than 0 "),
             brand: Yup.string().required("brand is required"),
             language: Yup.string().required("language is required"),
             releaseDate: Yup.string().required("releaseDate is required"),
@@ -104,7 +103,7 @@ function AdminBookDetail(){
 
     return(
         <>
-            <div className="col-10 pt-4">
+            <div className="pt-4">
                 <div className="row">
                     <div className="col-4 p-5">
                     <div className="detail-boximg ">
@@ -131,7 +130,7 @@ function AdminBookDetail(){
                             </div>
                     </div>
                     <div className="admin-form col-8">
-                    <form action="#" class="signup" onSubmit={formik.handleSubmit}>
+                    <form action="#" class="signup info" onSubmit={formik.handleSubmit}>
                         {book ?<h4>Cập nhật sản phẩm</h4>: <h4>Thêm sản phẩm</h4>}
                         <div className="field">
                         <input type="text" class="form-control" name="title"  
@@ -214,7 +213,7 @@ function AdminBookDetail(){
                             </div> 
                         </div>
                     <div class="">
-                            <textarea type="text"  rows="5" class="form-control" name="description" 
+                            <textarea type="text"  rows="7" class="form-control" name="description" 
                                         placeholder="Mô tả"  value={formik.values.description}
                                         onChange={formik.handleChange} 
                                         className={!formik.errors.description? "": "error_input"}/> 
@@ -223,7 +222,7 @@ function AdminBookDetail(){
                                 )}
                     </div>
                     <div class="admin-button">
-                            <input type="submit" value="SAVE" className="app-button" />
+                            <input type="submit" value="SAVE" className="app-button mt-2" />
                         </div>
                     </form>
                     </div>

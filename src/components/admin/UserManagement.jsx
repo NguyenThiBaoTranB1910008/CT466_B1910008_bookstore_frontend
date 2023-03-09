@@ -54,7 +54,7 @@ function UserManagement(){
     }
 
     return(
-        <div className="col-10 px-5 pt-3 user-overview ">
+        <div className="user-overview ">
                 <h1 className='admin-action'>Người dùng</h1>
                 <div className="order-item admin-search">
                     <div className="col-4">

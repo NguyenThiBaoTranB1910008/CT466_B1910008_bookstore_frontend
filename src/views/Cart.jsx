@@ -11,12 +11,14 @@ import { useNavigate } from 'react-router-dom';
 import { notify } from '../auth.action'
 import { getCartNumber } from '../auth.action'
 import { type } from '@testing-library/user-event/dist/type'
+import Modal from '../components/common/Modal'
 
 function Cart(){
     const [cart, setCart] = useState([])
     const [changQuality, setChangQuality] = useState(false)
     const [total, setTotal] = useState(0)
     const [state, dispatch] = useContext(Context)
+    const [activeModal, setActiveModal] = useState(false)
     const navigate = useNavigate()
     var totalprice
     var apicart=[]
@@ -64,6 +66,7 @@ function Cart(){
             }
         }
         deleteCart()
+        setActiveModal({active:false})
         setChangQuality(!changQuality)
         dispatch({
             type:"decart",
@@ -72,14 +75,14 @@ function Cart(){
     
     return(
         <>
-        {/* <ServiceModal showModal={modal} deleteCartItem={deleteCartItem} closeModal={closeModal}/> */}
+        {activeModal.active && <Modal item={activeModal.item} disagree={setActiveModal} agree={deleteCartItem}/>}
         <div className="container main">
             <div className="row cart">
                     {(cart.length===0) ? <EmptyCart imgUrl={"https://www.gramedia.com/assets/illustrations/empty-cart.png"}
                                                     title = {"Giỏ hàng của bạn đang rỗng"}/> :
                         <>
                 <div className="col-8">
-                        <ListCartItem cart={cart} currencyFormat={currencyFormat} setQualityCart={setQualityCart} deleteCartItem={deleteCartItem}/>
+                        <ListCartItem cart={cart} currencyFormat={currencyFormat} setQualityCart={setQualityCart} setActiveModal={setActiveModal}/>
                     </div>
                 <div className="col-1"></div>
                 <div className="col-3 cart-total">

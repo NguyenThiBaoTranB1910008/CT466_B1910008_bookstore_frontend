@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import productService from '../../services/product.service';
-import { currencyFormat } from '../../auth.action';
-function BookManagement(){
+import { currencyFormat, notify } from '../../auth.action';
+import { useContext } from 'react';
+import Context from '../../store/Context';
+import userService from '../../services/user.service';
+import Modal from '../common/Modal';
+// import { notify } from '../../auth.action';
+
+function BookManagement({setEditBook, setAdminChoose}){
     const [books, setBooks]= useState([])
     const [filter, setFilter] = useState({})
+    const [activeModal, setActiveModal] = useState(false)
     useEffect(()=>{
         async function fetchData(){
         try{
@@ -22,24 +29,41 @@ function BookManagement(){
         const search = document.getElementById('admin-input').value
         setFilter({search: search})
     }
+
+    const deleteBook = (id) =>{
+        async function deleteB(){
+            try{
+                await productService.delete(id)
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+        deleteB()
+        notify("success", "Xóa sản phẩm thành công")
+        setActiveModal(false)
+    }
+
     return(
-        <div className="col-10 px-5 pt-3 book-overview">
-                <h1 className='admin-action'>Sách</h1>
-                <div className="order-item admin-search">
-                    <div className="col-4">
-                <input className="form-control me-2" id="admin-input" type="text" placeholder="Tìm kiếm"/>
-                    <i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon" onClick={adminsearch}></i></div>
-                    <div className="">
-                        <Link to='/editbook' state={null}>
-                            <div className='admin-add-button mx-2'>
-                            <i class="fa-solid fa-plus"></i>
-                                New Book
+        <>
+        {activeModal.active && <Modal item={activeModal.book} disagree= {setActiveModal} agree={deleteBook}/>}
+        <div className="book-overview" id="book">
+            <div className="admin-search">
+                    <h1 className='admin-action'>Sách</h1>
+                        <div className="admin-search row">
+                            <div className="col-8">
+                            <input className="form-control me-2 py-2 px-3" id="admin-input" type="text" placeholder="Tìm kiếm"/>
+                            <i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon" onClick={adminsearch}></i></div>
+                            <div className="col-4">
+                                <div className='admin-add-button mx-2' onClick={()=> { setAdminChoose('edit'); setEditBook(null)}}>
+                                <i class="fa-solid fa-plus"></i>
+                                    New
+                                </div>
                             </div>
-                        </Link>
                     </div>
                 </div>
                 <div className='admin-book table-borderless'>
-                    <div className='header-cart-item row header-order'>
+                    <div className='header-cart-item row header-order mt-3'>
                         <div className="col-5">Tên sách</div>
                         <div className="col-3">Giá</div>
                         <div className="col-2">Tác giả</div>
@@ -60,15 +84,15 @@ function BookManagement(){
                                 <div className='col-2'>{book.author}</div>
                                 <div className='col-3'>
                                     <div className='action-buttons d-flex justify-content-end'>
-                                            <Link to="/editbook" state={book}>
-                                                <div
+                                            <div onClick={()=> { setAdminChoose('edit'); setEditBook(book)}}
                                                 className='admin-edit-button mx-2'>
                                                     <i className='fas fa-edit'></i>
                                                     Edit
                                                 </div>
-                                            </Link>
                                             <div
-                                            // onClick={(e) => handleShowConfirmBox(_id, e)}
+                                            onClick={() => setActiveModal({
+                                                active: true,
+                                                book: book})}
                                             className='admin-delete-button'>
                                                 <i className='fas fa-trash'></i>
                                                 Delete
@@ -80,6 +104,7 @@ function BookManagement(){
                     </div>
                 </div>
             </div>
+        </>
     )
 }
 

@@ -1,5 +1,5 @@
 import CartItem from "./CartItem"
-function ListCartItem({cart,currencyFormat,setQualityCart,deleteCartItem}){
+function ListCartItem({cart,currencyFormat,setQualityCart,setActiveModal}){
     return(
         <>
         <div className="header-cart-item row">
@@ -10,7 +10,7 @@ function ListCartItem({cart,currencyFormat,setQualityCart,deleteCartItem}){
         </div> 
         {
             cart.map((cartItem,index) => (
-               <CartItem cartItem={cartItem} currencyFormat={currencyFormat} setQualityCart={setQualityCart} deleteCartItem={deleteCartItem}/>               
+               <CartItem cartItem={cartItem} setQualityCart={setQualityCart} setActiveModal={setActiveModal}/>               
             ))
         }
         </>
