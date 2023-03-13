@@ -1,12 +1,20 @@
 import { Link } from "react-router-dom"
-function Book({prop, currencyFormat}){
+import { currencyFormat } from "../../auth.action";
+
+function Book({prop}){
     return (
         <>
             <div className="book">
                 <Link to={`/product/${prop.id}`}>
                         <img src={prop.imageUrl} alt=""/>
+                        {prop.quantity === 0  &&
+                        <div className="outofstockdemo center">
+                            <span className="notify">Hết Hàng</span>
+                        </div>}
+                        <div className="book-info">
                         <p className="book-name pt-3">{prop.title}</p>
                         <p className="book-author">{prop.author}</p>
+                        </div>
                         <p className="book-price">{currencyFormat(prop.price)}</p>
                 </Link>
             </div>

@@ -35,7 +35,7 @@ function BrandFilter({handleFilters}){
 
     const [Checked, setChecked] = useState([])
 
-    const handleToggle = (value, name) => {
+    const handleToggle = (name) => {
 
         const currentIndex = Checked.indexOf(name);
         const newChecked = [...Checked];
@@ -54,12 +54,12 @@ function BrandFilter({handleFilters}){
     return(
         <>
             <div className="category-filter pt-5">
-                <h4>Nhà Xuất Bản</h4>
+                <h4>Nhà xuất bản</h4>
                 {
                     brands.map((brand)=>(
                         <div>
                             <input type="checkbox" name="" id="" 
-                                onChange={() => handleToggle(brand.id, brand.name)}
+                                onChange={() => handleToggle(brand.name)}
                                 checked={Checked.indexOf(brand.name) === -1 ? false : true}/>&nbsp;&nbsp;
                             <span>{brand.name}</span>
                         </div> 

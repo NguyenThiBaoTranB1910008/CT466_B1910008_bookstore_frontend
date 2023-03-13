@@ -1,24 +1,19 @@
 import './App.css';
 import { Routes, Route } from "react-router-dom"
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useContext } from 'react';
-import Context from './store/Context';
-import AppHeader from './components/common/header/AppHeader'
-import AppFooter from './components/common/footer/AppFooter';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
 import Login from './views/Login';
-import Category from './components/category/Category'
+import Category from './views/Menu'
 import Cart from './views/Cart.jsx'
 import Detail from './views/Detail';
 import AdminBookDetail from './components/admin/AdminBookDetail';
 import CheckOut from './views/CheckOut';
-import Account from './components/account/Account';
-import AdminPage from './components/admin/AdminPage';
+import Account from './views/Account';
+import AdminPage from './views/AdminPage';
 
 function App() {
-  const [state] = useContext(Context)
   return (
     <>
       <ToastContainer position="top-center"
@@ -31,7 +26,6 @@ function App() {
                       draggable
                       pauseOnHover
                       theme="light"/>
-          <AppHeader/>
             <Routes>
               <Route path="/" element={<Home/>}/>
               <Route path="/login" element={<Login/>}/>
@@ -45,7 +39,6 @@ function App() {
               <Route path="/admin" element={<AdminPage/>}/>
               <Route path="/admin/editbook" element={<AdminBookDetail/>}/>
            </Routes> 
-         <AppFooter/>
          </>
   );
 }

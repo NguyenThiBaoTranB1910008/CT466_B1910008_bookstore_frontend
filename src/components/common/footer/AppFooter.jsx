@@ -38,15 +38,15 @@ function AppFooter(){
                             <h2 className="m-0 logan">Lấy cảm hứng và bắt đầu truyền cảm hứng</h2>
                         </div>
                         <div className="social">
-                            <Link to="https://www.instagram.com">
+                            <a href="https://www.instagram.com">
                                 <img src="https://www.gramedia.com/assets/social-icon/instagram.png" alt=""></img>
-                            </Link>
-                            <Link to="https://www.twitter.com">
+                            </a>
+                            <a href="https://www.twitter.com">
                                 <img src="https://www.gramedia.com/assets/social-icon/twitter.png" alt=""></img>
-                            </Link>
-                            <Link to="https://www.facebook.com">
+                            </a>
+                            <a href="https://www.facebook.com">
                                 <img src="https://www.gramedia.com/assets/social-icon/facebook.png" alt=""></img>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

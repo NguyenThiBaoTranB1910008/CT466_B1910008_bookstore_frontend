@@ -1,9 +1,9 @@
-import orderService from "../../services/order.service"
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { notify, currencyFormat } from '../../auth.action.js';
-import announceService from "../../services/announce.service";
 import moment from 'moment'
+import { notify, currencyFormat } from '../../auth.action.js';
+import orderService from "../../services/order.service"
+import announceService from "../../services/announce.service";
+import productService from "../../services/product.service";
 
 function OrderManagment(){
     const[orders, setOrders]= useState([])
@@ -37,25 +37,23 @@ function OrderManagment(){
 
     const openDetail = (id) =>{
         var detail = document.getElementsByClassName(`${id}`)
-        if(detail[0].classList.contains('none')){
-            detail[0].classList.remove('none')
+        if(detail[0].style.maxHeight==='0px'){
             detail[0].style.maxHeight = '500px'
         }else{
-            detail[0].classList.add('none')
             detail[0].style.maxHeight = '0'
         }
     }
 
-    const confirm = (id, accname) =>{
+    const confirm = (order) =>{
         var announment = {
             date: moment().format("DD/MM/YYYY, h:mm:ss a"),
-            user : accname,
+            user : order.accname,
             content: "Đơn hàng đã được xác nhận và đang trên đường giao đến bạn.",
-            idOrder: id
+            idOrder: order.id
         }
         
         var a ={
-            id: id,
+            id: order.id,
             type: "process"
         }
 
@@ -74,20 +72,23 @@ function OrderManagment(){
         confirmOrder()
     }
 
-    const deleteOrder = (id, accname) => {
+    const deleteOrder = (order) => {
         var announment = {
             date: moment().format("DD/MM/YYYY, h:mm:ss a"),
-            user : accname,
+            user : order.accname,
             content: "Xin lỗi, đơn hàng không thành công.",
-            idOrder: id
+            idOrder: order.id
         }
 
         const confirmOrder = async() =>{
             try{
                 notify("success", "Đơn hàng đã được hủy bỏ")
-                await orderService.confirm({ id: id, type: "cancel"})
+                await orderService.confirm({ id: order.id, type: "cancel"})
                 await announceService.create(announment)
                 setFilter({...filter, changeData: !filter.changeData})
+                orderdetails[order.id].map(async(product)=> (
+                    await productService.order(product.id, {id: product.idBook, quantity: -product.quantity})
+                ))
             }
             catch(error){
                 console.log(error);
@@ -143,11 +144,11 @@ function OrderManagment(){
                                         {order.status === "wait" &&
                                         <div className="order-confirm">
                                             <div className='admin-add-button mx-2'
-                                                onClick={()=>confirm(order.id, order.accname)}>
+                                                onClick={()=>confirm(order)}>
                                                 <i class="fa-solid fa-check"></i>
                                             </div>
                                             <div
-                                            className='admin-delete-button' onClick={() => deleteOrder(order.id, order.accname)}>
+                                            className='admin-delete-button' onClick={() => deleteOrder(order)}>
                                                 <i className='fas fa-trash'></i>
                                             </div>
                                         </div>}
@@ -158,7 +159,7 @@ function OrderManagment(){
                                     </div>
                                 </div>
                             </div>
-                            <div className={"order-detail-all none " + ` ${order.id}`}>
+                            <div className={"order-detail-all " + ` ${order.id}`}>
                                 {   
                                     (!orderdetails[order.id]) ? "" :
                                     orderdetails[order.id].map((detail)=>(
@@ -172,7 +173,7 @@ function OrderManagment(){
                                                     {detail.title}
                                                 </div>
                                             </div>
-                                            <div className="col-2"><span className="order-detail-quality">x{detail.quality}</span></div> 
+                                            <div className="col-2"><span className="order-detail-quality">x{detail.quantity}</span></div> 
                                             <div className="order-detail-price col-2">
                                                 {currencyFormat(detail.price)}
                                             </div>

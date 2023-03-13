@@ -19,7 +19,6 @@ class ProductService {
         return (await this.api.post("/filter", filter)).data;
     }
     async upload(file) {
-        console.log(`${this.api}/upload`)
         return (await this.api.post("/upload", file)).data;
     }
     async getLimit() {
@@ -27,6 +26,9 @@ class ProductService {
     }
     async update(id, data) {
         return (await this.api.put(`/${id}`, data)).data;
+    }
+    async order(id, data) {
+        return (await this.api.post(`/${id}`, data)).data;
     }
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;

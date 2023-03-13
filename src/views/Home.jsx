@@ -4,6 +4,9 @@ import ListCategory from "../components/category/ListCategory";
 import { useEffect, useState } from 'react';
 import ProductService from "../services/product.service";
 import { currencyFormat } from "../auth.action";
+import AppHeader from "../components/common/header/AppHeader";
+import AppFooter from "../components/common/footer/AppFooter";
+
 function Home({books}){
   const [newbooks, setNewBooks]= useState([])
   useEffect(()=>{
@@ -19,6 +22,8 @@ function Home({books}){
     fetchData()
   },[])
     return(
+      <>
+      <AppHeader/>
         <div className="container main">
             <div className="row ">
                 <div className="col-8">
@@ -31,7 +36,7 @@ function Home({books}){
                             <img src="https://img.freepik.com/free-psd/world-book-day-banner-template_23-2149323909.jpg?w=2000" className="d-block w-100" alt="..."></img>
                           </div>
                           <div className="carousel-item">
-                            <img src="https://img.freepik.com/free-vector/flat-world-book-day-banners-set_23-2148885270.jpg?w=740&t=st=1672486028~exp=1672486628~hmac=16ad4974d3e0085afbdb1d6b33891996f872af938b854ccc1fd77a69e53ffb7e" className="d-block w-100" alt="..."></img>
+                            <img src="https://www.bookswagon.com/images/bannerimages/82_inr.jpg?v=1.4" className="d-block w-100" alt="..."></img>
                           </div>
                         </div>
                         <button className="carousel-control-prev  carousel-control-prev-next-icon" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -70,6 +75,8 @@ function Home({books}){
               <hr/>
             </div>
         </div>
+      <AppFooter/>
+      </>
     )
 }
 

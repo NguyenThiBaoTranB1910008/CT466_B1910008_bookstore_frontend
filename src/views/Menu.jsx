@@ -1,12 +1,13 @@
-import { useParams} from "react-router-dom"
-import { useEffect, useState, useRef } from "react"
-import ListBook from "../books/ListBook"
-import ProductService from "../../services/product.service"
-import { useLocation } from 'react-router-dom'
-import BrandFilter from "./filter/BrandFilter"
-import PriceFilter from "./filter/PriceFilter"
-import CategoryFilter from "./filter/CategoryFilter"
-import { currencyFormat } from "../../auth.action"
+import { useEffect, useState } from "react"
+import { useParams, useLocation} from "react-router-dom"
+import ListBook from "../components/books/ListBook"
+import ProductService from "../services/product.service"
+import BrandFilter from "../components/category/filter/BrandFilter"
+import PriceFilter from "../components/category/filter/PriceFilter"
+import CategoryFilter from "../components/category/filter/CategoryFilter"
+import AppHeader from "../components/common/header/AppHeader"
+import AppFooter from "../components/common/footer/AppFooter"
+
 function Caterory(){
     const [books, setBooks] = useState([])
     const [bookSize, setBookSize] = useState(0)
@@ -35,7 +36,7 @@ function Caterory(){
     },[filter])
 
     useEffect(()=>{
-        if(q != undefined){
+        if(q !== undefined){
             handleFilters('search',q)
         }
     },[q])
@@ -51,7 +52,7 @@ function Caterory(){
             newFilters.max = parseInt(max.value)
         }
         else if(item === "order"){
-            if(filters=="Giảm dần")
+            if(filters==="Giảm dần")
                 newFilters[item] = 'DESC'
             else
                 newFilters[item] = 'ASC'
@@ -77,6 +78,8 @@ function Caterory(){
     }
 
     return(
+        <>
+        <AppHeader/>
         <div className="container main" id="category-page">
             <div className="row">
                 <div className="col-3 filter">
@@ -87,7 +90,7 @@ function Caterory(){
                 <div className="col-9">
                     <div className="listinfo">
                         <div className="">
-                            {q == undefined ?  "" :<span>Kết quả tìm kiếm với từ khóa "<b>{q}</b>":</span>}
+                            {q === undefined ?  "" :<span>Kết quả tìm kiếm với từ khóa "<b>{q}</b>":</span>}
                             <div>Số lượng: {bookSize} sản phẩm</div>
                         </div>
                         <div className="orderBox">
@@ -95,14 +98,16 @@ function Caterory(){
                             <span onClick={openOrderBox}><i class="fa-sharp fa-solid fa-chevron-down"></i></span>
                         </div>
                             <div id="orderList" className="none" >
-                                <div className={order=="Giảm dần" ? "selected":""} onClick={()=>handleFilters('order','Giảm dần')}>Giảm dần</div>
-                                <div className={order=="Tăng dần" ? "selected":""} onClick={()=>handleFilters('order','Tăng dần')}>Tăng dần </div>
+                                <div className={order==="Giảm dần" ? "selected":""} onClick={()=>handleFilters('order','Giảm dần')}>Giảm dần</div>
+                                <div className={order==="Tăng dần" ? "selected":""} onClick={()=>handleFilters('order','Tăng dần')}>Tăng dần </div>
                             </div>
                     </div>
-                    <ListBook books={books} currencyFormat={currencyFormat}/> 
+                    <ListBook books={books}/> 
                 </div>
             </div>
         </div>
+        <AppFooter/>
+        </>
     )
 }
 

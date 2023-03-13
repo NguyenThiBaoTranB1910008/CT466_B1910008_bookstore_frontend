@@ -1,13 +1,12 @@
-import './Detail.css'
-import { useState } from 'react';
-import { useEffect } from 'react';
+// import './Detail.css'
+import { useState, useEffect, useContext } from 'react';
 import ProductService from '../services/product.service'
 import CartService from '../services/cart.service'
-import { useParams } from "react-router-dom"
-import { useContext } from 'react';
+import { useParams, useNavigate } from "react-router-dom"
 import Context from "../store/Context";
 import { notify, currencyFormat } from '../auth.action';
-import { useNavigate } from 'react-router-dom';
+import AppHeader from '../components/common/header/AppHeader';
+import AppFooter from '../components/common/footer/AppFooter';
 
 function Detail(){
     const {id} = useParams()
@@ -15,7 +14,7 @@ function Detail(){
     const [state, dispatch] = useContext(Context)
     const [salebox, setSalebox] = useState({
         total: 0,
-        quality: 0,
+        quantity: 0,
     })
     const navigate = useNavigate()
     useEffect(() => {
@@ -25,7 +24,7 @@ function Detail(){
                 setBook(apibook)
                 setSalebox({
                     total: apibook.price,
-                    quality:1
+                    quantity:1
                 })
 
             } catch (error) {
@@ -36,7 +35,7 @@ function Detail(){
     },[id]);
 
     const addToCart = async (book) =>{
-        const quality = document.getElementById('quality') 
+        const quantity = document.getElementById('quantity') 
         var bookExit
         try {
             bookExit= await CartService.get(book.id, {user: state.loginAccount})
@@ -52,7 +51,7 @@ function Detail(){
              title: book.title,
              price: book.price,
              imgUrl: book.imageUrl,
-             quality: parseInt( quality.value)
+             quantity: parseInt( quantity.value)
            }
            try {
                 await CartService.create(cartItem)
@@ -66,7 +65,7 @@ function Detail(){
             
             notify("success","Đã thêm sản phẩm vào giỏ hàng")
         }else{
-           bookExit.quality= bookExit.quality + parseInt( quality.value)
+           bookExit.quantity= bookExit.quantity + parseInt( quantity.value)
             try {
                await CartService.update(bookExit.id, bookExit)
             } catch (error) {
@@ -77,7 +76,7 @@ function Detail(){
     }
 
     const checkout = async (book) =>{
-        const quality = document.getElementById('quality') 
+        const quantity = document.getElementById('quantity') 
         if(state.loginAccount === "")
             navigate("/login")
         else{
@@ -87,7 +86,7 @@ function Detail(){
              title: book.title,
              price: book.price,
              imgUrl: book.imageUrl,
-             quality: parseInt( quality.value)
+             quantity: parseInt( quantity.value)
            }
            navigate('/order', {state: {cart: [cartItem]}} )
         }
@@ -95,21 +94,24 @@ function Detail(){
     
 
     const changeQuality =(type) =>{
-        var qua = salebox.quality
-        if(type ==="up")    
-            setSalebox({
-                total:book.price*(qua+1),
-                quality: qua + 1
-            })
+        var qua = salebox.quantity
+        if(type ==="up" ){    
+            if(qua < book.quantity)
+                setSalebox({
+                    total:book.price*(qua+1),
+                    quantity: qua + 1
+                })
+        }
         else if(qua > 1)
             setSalebox({
                 total:book.price*(qua-1),
-                quality: qua-1
+                quantity: qua-1
             })
     }
       
     return(
         <>
+        <AppHeader/>
             <div className="container main">
                 <div className="row">
                     <div className="col-9">
@@ -162,14 +164,16 @@ function Detail(){
                         </div>
                     </div>
                     </div>
+                    {
+                        book.quantity!==0  ?
                     <div className="col-3 detail-salebox">
                         <p>Thêm vào giỏ hàng bạn nhé</p>
-                        <div className="salebox-quality">
+                        <div className="salebox-quantity">
                             <p>Số lượng</p>
                             <button onClick={() => changeQuality('down')}>
                                 <i className="fa-solid fa-minus"></i>
                             </button>
-                            <input type="text" value={salebox.quality} className="detail-quality" id="quality"/>
+                            <input type="text" value={salebox.quantity} className="detail-quantity" id="quantity"/>
                             <button onClick={() => changeQuality('up')}>
                                 <i className="fa-solid fa-plus"></i>
                             </button>
@@ -188,8 +192,15 @@ function Detail(){
                             </button>
                         </div>
                     </div>
+                    :
+                    <div className="col-3 detail-salebox outofstock">
+                        <p>Xin lỗi, quyển sách này đã hết hàng</p>
+                        <span>Quý khách có thể lựa chọn các sản phẩm tương tự. Chúng tôi sẽ cố gắng khắc phục lỗi sớm nhất. Xin lỗi vì sự bất tiện này.</span>
+                        <div className="line"></div>
+                    </div>}
                 </div>
             </div> 
+        <AppFooter/>
         </>
     )
 }

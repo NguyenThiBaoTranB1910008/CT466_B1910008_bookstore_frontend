@@ -67,17 +67,9 @@ function AppHeader() {
                    <Link to="/menu" className="menu" state={{category : ""}}>
                       {/* <span> */}
                       {/* <i class="fa-solid fa-list"></i> */}
-                        Danh Mục Sách
+                        Danh Mục 
                       {/* </span> */}
                     </Link>
-                    {/* {showMenu ?  <i class="fa-solid fa-chevron-up"></i> : <i className="fa-solid fa-chevron-down"></i>}
-                    <ul className= {showMenu ? "sub-menu show" : "sub-menu" } >
-                      <Link to="/edu"><li className="sub-menu-li">Tâm lý kỹ năng</li></Link>
-                      <li className="sub-menu-li">Sách tham khảo</li>
-                      <li className="sub-menu-li">Văn học </li>
-                      <li className="sub-menu-li">Kinh tế</li>
-                    </ul> */}
-                  {/* </div> */}
                   <form className="">
                   <input className="form-control me-2" id="header-input" type="text" placeholder="Tìm kiếm" onChange={headInput}/>
                     <Link to={`/menu${search}`} state={{cate: ""}}><i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon"></i></Link>
@@ -93,10 +85,11 @@ function AppHeader() {
                         <Link to="/myorder" state={{cate: "announment"}}><li className=""><span>Thông báo</span>  
                         {state.newNotify.length !== 0 && <span className="newNumber mx-3 my-1"></span>}</li></Link>
                         <Link to="/myorder" state={{cate: "info"}}><li>Thông tin tài khoản</li></Link>
+                        {state.isAdmin && <Link to="/admin" ><li className=""><span>Quản lý cửa hàng</span></li></Link> }
                         <li onClick={handlelogout} className="logout">Đăng xuất</li>
                       </ul>
                     </div>}
-                  <Link to="./cart">
+                  <Link to="/cart">
                     <span className="cart-icon">
                       <i className="fa-solid fa-cart-shopping"></i>
                       {state.loginAccount !== "" &&

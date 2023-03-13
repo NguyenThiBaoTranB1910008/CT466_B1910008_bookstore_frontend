@@ -44,13 +44,14 @@ function Login(){
                             type: "login",
                             name: trueUser.accname,
                             cartItem: cart.length,
-                            newNotify: seen
+                            newNotify: seen,
+                            isAdmin: trueUser.isadmin
                         })
                         if(values.remember){
                             localStorage.setItem("user", values.accname )
                         }
                         notify('success',"Đăng nhập thành công")
-                        if(trueUser.isadmin)
+                        if(trueUser.accname ==="admin")
                             navigate("/admin")
                         else    
                             navigate("/")

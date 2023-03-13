@@ -36,12 +36,10 @@ function MyOrder({idfocus}){
     
     const openDetail = (id) =>{
         var detail = document.getElementsByClassName(`${id}`)
-        if(detail[0].classList.contains('none')){
-            detail[0].classList.remove('none')
-            detail[0].style.height = "auto"
-            detail[0].style.visibility = "visible"
+        if(detail[0].style.maxHeight==='0px'){
+            detail[0].style.maxHeight = '500px'
         }else{
-            detail[0].classList.add('none')
+            detail[0].style.maxHeight = '0'
         }
     }
 
@@ -69,7 +67,7 @@ function MyOrder({idfocus}){
         <>  
             <div className="col-9">
                 <div className="row mb-3">
-                    <div className="col-4 p-0">
+                    <div className="col-3 p-0">
                     <select class="form-select" name="country" id="order-filter" onChange={(e)=>setFilter({...filter, status: e.target.value})}>
                         <option value="" >Tất cả</option>
                         <option value="wait" >Chờ xác nhận</option>
@@ -109,7 +107,7 @@ function MyOrder({idfocus}){
                                     }</div>
                                 <div className="col-1 order-item-icon"><i class="fa-solid fa-angles-down" onClick={()=>openDetail(order.id)}></i></div>
                             </div>
-                            <div className={"order-detail-all none " + ` ${order.id}`}>
+                            <div className={"order-detail-all " + ` ${order.id}`}>
                                 {   
                                     (!orderdetails[order.id]) ? "" :
                                     orderdetails[order.id].map((detail)=>(
@@ -123,7 +121,7 @@ function MyOrder({idfocus}){
                                                     {detail.title}
                                                 </div>
                                             </div>
-                                            <div className="col-2"><span className="order-detail-quality">x{detail.quality}</span></div> 
+                                            <div className="col-2"><span className="order-detail-quality">x{detail.quantity}</span></div> 
                                             <div className="order-detail-price col-2">
                                                 {currencyFormat(detail.price)}
                                             </div>

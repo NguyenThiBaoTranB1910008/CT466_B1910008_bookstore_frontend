@@ -1,29 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import userService from "../../services/user.service";
 import { notify } from "../../auth.action";
-import { useEffect, useState } from "react";
+
 
 function AccountInfo({user}){
-    // const [user, setUser] = useState({})
-    // var apiuser
-    // useEffect(()=>{
-    //     const fetchData = async () =>{
-    //     try{
-    //         apiuser = await userService.get(localStorage.getItem('user'))
-    //         setUser(apiuser)
-    //     }
-    //     catch(error){
-    //         console.log(error);
-    //     }
-    //     }
-    //     fetchData()
-    // },[])
     const formik = useFormik({
         initialValues: {
             fullname: user.fullname,
-            pass: "",
+            pass: user.pass,
             confirm_pass: ""
         },
         validationSchema: Yup.object({
@@ -91,7 +77,6 @@ function AccountInfo({user}){
         </form>
         </div>
         </>
-
     )
 }
 

@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
-import AccountInfo from "./AccountInfo"
-import { useLocation } from "react-router-dom"
-import userService from "../../services/user.service"
-import { useContext } from 'react';
-import Context from "../../store/Context"
-import { useNavigate } from "react-router-dom";
-import { notify } from "../../auth.action"
-import Announment from "./Announment";
-import MyOrder from "./MyOrder";
-import announceService from "../../services/announce.service";
+import { useEffect, useState, useContext } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import Context from "../store/Context";
+import userService from "../services/user.service";
+import announceService from "../services/announce.service";
+import { notify } from "../auth.action"
+import AccountInfo from "../components/account/AccountInfo"
+import Announment from "../components/account/Announment";
+import MyOrder from "../components/account/AccountOrder";
+import AppHeader from "../components/common/header/AppHeader";
+import AppFooter from "../components/common/footer/AppFooter";
 
 function Account(){
     const location = useLocation()
@@ -41,9 +41,7 @@ function Account(){
     useEffect(()=>{
         const fetchOrder = async() =>{
             try{
-                console.log(state.loginAccount)
                 const apiannounce = await announceService.get(state.loginAccount)
-                console.log(apiannounce)
                 var seen = []
                 apiannounce.map((announment)=>{
                     if(announment.status===0)
@@ -69,6 +67,7 @@ function Account(){
       
     return(
         <>
+            <AppHeader/>
             <div className="myorder container main">
                 <div className="row">
                 <div className="col-3">
@@ -101,6 +100,7 @@ function Account(){
                 }
                 </div>
             </div>
+            <AppFooter/>
         </>
     )
 }

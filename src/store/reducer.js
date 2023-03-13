@@ -1,6 +1,7 @@
 
 const initState = {
     loginAccount:  localStorage.getItem('user') ?? "",
+    isAdmin: false,
     cartItem: 0,
     newNotify: [] 
 }
@@ -19,13 +20,15 @@ function reducer(state, action){
                 // ...state,
                 loginAccount:action.name,
                 cartItem: action.cartItem,
-                newNotify: action.newNotify
+                newNotify: action.newNotify,
+                isAdmin: action.isAdmin
             }
         case LOGOUT_ACTION:
             localStorage.removeItem('user');
             return {
                 ...state,
-                loginAccount: ""
+                loginAccount: "",
+                isAdmin: false,
             }
         case INCREASE_CART_NUMBER:
             return{

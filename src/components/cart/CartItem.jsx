@@ -11,17 +11,17 @@ function CartItem({cartItem,setQualityCart,setActiveModal}){
                 </div>
                 <p className="cart-item-price">{currencyFormat(cartItem.price)}</p>
             </div>
-            <div className="salebox-quality col-2 p-0">
-                <button onClick={()=>setQualityCart(cartItem.id, cartItem.quality -1)}>
+            <div className="salebox-quantity col-2 p-0">
+                <button onClick={()=>setQualityCart(cartItem.id, cartItem.quantity -1)}>
                     <i class="fa-solid fa-minus"></i>
                 </button>
-                    <input type="text" value={cartItem.quality}/>
-                <button onClick={()=>setQualityCart(cartItem.id, cartItem.quality + 1)}>
+                    <input type="text" value={cartItem.quantity}/>
+                <button onClick={()=>setQualityCart(cartItem.id, cartItem.quantity + 1)}>
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
             <div className="cart-item-total col-2">
-                {currencyFormat(cartItem.quality * cartItem.price)}
+                {currencyFormat(cartItem.quantity * cartItem.price)}
             </div>
             <div className="cart-item-trash col-1">
                 <i class="fa-regular fa-trash-can" onClick={()=>{setActiveModal({active: true, item: cartItem})}}></i>

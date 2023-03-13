@@ -2,7 +2,7 @@ function CategoryFilter({filter, handleFilters}){
     const categories=[
         {
             kh:"TL",
-            name:"Tâm Lý - Kỹ Năng Sống"
+            name:"Tâm lý - Kỹ năng sống"
         },
         {
             kh:"MG",
@@ -10,15 +10,15 @@ function CategoryFilter({filter, handleFilters}){
         },
         {
             kh:"SGK",
-            name:"Giáo Khoa - Tham Khảo"
+            name:"Giáo khoa - Tham khảo"
         },
         {
             kh:"NN",
-            name:"Sách Học Ngoại Ngữ"
+            name:"Sách học ngoại ngữ"
         },
         {
             kh:"NG",
-            name:"Sách Nước Ngoài"
+            name:"Sách nước ngoài"
         },
     ]
     return(
@@ -26,7 +26,7 @@ function CategoryFilter({filter, handleFilters}){
             <h4 >Thể loại</h4>
             <ul className="category-book">
                 <li className={filter.category=="" ? "selected" : ""} 
-                        onClick={()=>handleFilters("category","")}>Tất Cả Sách</li>
+                        onClick={()=>handleFilters("category","")}>Tất cả sách</li>
                 {
                     categories.map((cate)=>(
                         <li className={filter.category===cate.kh ? "selected" : ""} 
