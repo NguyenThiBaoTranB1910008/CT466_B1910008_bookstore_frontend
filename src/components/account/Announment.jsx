@@ -11,31 +11,17 @@ function Announment ({setChoose, announments, nonseen}){
     // const [nonseenList, setNonseen] = useState([])
     // setNonseen(nonseen)
      useEffect(()=>{
-        const fetchOrder = async() =>{
-            try{
-                await announceService.seen({accname: localStorage.getItem('user')})
-            }
-            catch(error){
-                console.log(error);
-            }
-        }
-        fetchOrder()
-        return () => {
-                // dispatch({
-                //     type: "seen"
-                // })
-            // console.log("clean up")
-        };
-        // return async() => {e
+        // return async() => {
         //     const seen = async() =>{
         //         try{
-    //     //         }
-    //     //         catch(error){
-    //     //             console.log(error);
-    //     //         }
-    //     //     }
-    //     //     seen()
-    //     // }
+        //             await announceService.seen({accname: localStorage.getItem('user')})
+        //         }
+        //         catch(error){
+        //             console.log(error);
+        //         }
+        //     }
+        //     seen()
+        // }
     },[])
     return(
         <>

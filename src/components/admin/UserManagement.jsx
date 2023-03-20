@@ -56,7 +56,7 @@ function UserManagement(){
     return(
         <div className="user-overview ">
                 <h1 className='admin-action'>Người dùng</h1>
-                <div className="order-item admin-search">
+                <div className="admin-search">
                     <div className="col-4">
                 <input className="form-control me-2" id="admin-input" type="text" placeholder="Tìm kiếm"/>
                     <i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon" onClick={adminsearch}></i></div>

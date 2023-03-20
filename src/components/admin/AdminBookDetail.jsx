@@ -111,13 +111,14 @@ function AdminBookDetail({editbook, setAdminChoose}){
                             <div className="detail-img">
                                 {selectedImage.imgUrl != "" ?
                                 <img src={selectedImage.imgUrl} alt="" /> 
-                                :  <div className="addImage"><label htmlFor="image-file"><i class="fa-solid fa-plus"></i></label></div>}
+                                :  <img src="https://cdn.gramedia.com/uploads/highlighted_menu/Icon_category_Buku_Baru__w100_hauto.png" style={{padding: "60px 50px"}}></img>}
                             </div>
                     </div>
                             <div>
                                 <input className="uploadfile" name="imageUrl" id="image-file" 
                                 // value={formik.values.imageUrl}
                                     type="file"
+                                    accept="image/*"
                                         onChange={(event) => {
                                             // uploadFile(
                                                 formik.values.imageUrl= URL.createObjectURL(event.target.files[0])
@@ -132,12 +133,12 @@ function AdminBookDetail({editbook, setAdminChoose}){
                     </div>
                     <div className="admin-form col-8">
                     <form action="#" class="signup info" onSubmit={formik.handleSubmit}>
-                        {book ?<h4>Cập nhật sản phẩm</h4>: <h4>Thêm sản phẩm</h4>}
+                        {/* {book ?<h4>Cập nhật sản phẩm</h4>: <h4>Thêm sản phẩm</h4>} */}
                         <div className="field">
                         <input type="text" class="form-control" name="title"  
                                         placeholder="Tên sách" value={formik.values.title}
                                         onChange={formik.handleChange} 
-                                        className={!formik.errors.title && formik.touched.title &&  "error_input"}/>
+                                        className={formik.errors.title && formik.touched.title &&  "error_input"}/>
                         {formik.errors.title && formik.touched.title &&  (
                                     <p className="form_error">{formik.errors.title}</p>
                                 )}
@@ -147,7 +148,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                 <input type="text" class="form-control" name="author" 
                                         placeholder="Tác giả" value={formik.values.author}
                                         onChange={formik.handleChange} 
-                                        className={!formik.errors.author && formik.touched.author && "error_input"}/>
+                                        className={formik.errors.author && formik.touched.author && "error_input"}/>
                                 {formik.errors.author && formik.touched.author && (
                                     <p className="form_error">{formik.errors.author}</p>
                                 )}
@@ -156,7 +157,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                 <input type="number" class="form-control" name="quantity" 
                                         placeholder="Số lượng" value={formik.values.quantity}
                                         onChange={formik.handleChange} 
-                                        className={!formik.errors.quantity && formik.touched.quantity && "error_input"}/>
+                                        className={formik.errors.quantity && formik.touched.quantity && "error_input"}/>
                                 {formik.errors.quantity && formik.touched.quantity && (
                                     <p className="form_error">{formik.errors.quantity}</p>
                                 )}
@@ -167,7 +168,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                             < input type="text" class="form-control"  name="price"
                                         placeholder="Giá"  value={formik.values.price}
                                         onChange={formik.handleChange} 
-                                        className={!formik.errors.price && formik.touched.price && "error_input"}/>
+                                        className={formik.errors.price && formik.touched.price && "error_input"}/>
                             {formik.errors.price && formik.touched.price && (
                                     <p className="form_error">{formik.errors.price}</p>
                                 )}
@@ -176,7 +177,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                             <input type="text" class="form-control" name="releaseDate" 
                                         placeholder="Năm xuất bản"  value={formik.values.releaseDate}
                                         onChange={formik.handleChange} 
-                                        className={!formik.errors.releaseDate && formik.touched.releaseDate && "error_input"}/> 
+                                        className={formik.errors.releaseDate && formik.touched.releaseDate && "error_input"}/> 
                             {formik.errors.releaseDate && formik.touched.releaseDate && (
                                     <p className="form_error">{formik.errors.releaseDate}</p>
                                 )}
@@ -187,7 +188,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                 <input type="text" class="form-control" name="brand" 
                                             placeholder="Nhà xuất bản"  value={formik.values.brand}
                                             onChange={formik.handleChange} 
-                                            className={!formik.errors.brand && formik.touched.brand && "error_input"}/> 
+                                            className={formik.errors.brand && formik.touched.brand && "error_input"}/> 
                                 {formik.errors.brand && formik.touched.brand && (
                                         <p className="form_error">{formik.errors.brand}</p>
                                     )}
@@ -196,7 +197,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                 <input type="text" class="form-control" name="language" 
                                             placeholder="Ngôn ngữ"  value={formik.values.language}
                                             onChange={formik.handleChange} 
-                                            className={!formik.errors.language && formik.touched.language && "error_input"}/> 
+                                            className={formik.errors.language && formik.touched.language && "error_input"}/> 
                                 {formik.errors.language && formik.touched.language && (
                                         <p className="form_error">{formik.errors.language}</p>
                                     )}
@@ -207,7 +208,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                     <input type="number" class="form-control" name="page" 
                                             placeholder="Số trang" value={formik.values.page}
                                             onChange={formik.handleChange} 
-                                            className={!formik.errors.page && formik.touched.page && "error_input"}/>
+                                            className={formik.errors.page && formik.touched.page && "error_input"}/>
                                     {formik.errors.page && formik.touched.page && (
                                         <p className="form_error">{formik.errors.page}</p>
                                     )}

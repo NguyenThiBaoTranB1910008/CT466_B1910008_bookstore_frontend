@@ -7,8 +7,7 @@ function BookManagement({setEditBook, setAdminChoose}){
     const [books, setBooks]= useState([])
     const [filter, setFilter] = useState({})
     const [activeModal, setActiveModal] = useState(false)
-    useEffect(()=>{
-        async function fetchData(){
+    async function fetchData(){
         try{
             const apibooks = await productService.getByFilter(filter)
             setBooks(apibooks)
@@ -17,6 +16,17 @@ function BookManagement({setEditBook, setAdminChoose}){
             console.log(error);
         }
     }
+
+    async function deleteB(id){
+        try{
+            await productService.delete(id)
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    useEffect(()=>{
         fetchData()
     },[filter])
 
@@ -26,17 +36,10 @@ function BookManagement({setEditBook, setAdminChoose}){
     }
 
     const deleteBook = (id) =>{
-        async function deleteB(){
-            try{
-                await productService.delete(id)
-            }
-            catch(error){
-                console.log(error);
-            }
-        }
-        deleteB()
-        notify("success", "Xóa sản phẩm thành công")
+        deleteB(id)
         setActiveModal(false)
+        setFilter({change: true})
+        notify("success", "Xóa sản phẩm thành công")
     }
 
     return(
@@ -47,7 +50,7 @@ function BookManagement({setEditBook, setAdminChoose}){
                     <h1 className='admin-action'>Sách</h1>
                         <div className="admin-search row">
                             <div className="col-8">
-                            <input className="form-control me-2 py-2 px-3" id="admin-input" type="text" placeholder="Tìm kiếm"/>
+                            <input className="form-control me-2 py-2 px-3" id="admin-input" type="text" placeholder="Tìm kiếm" onChange={adminsearch}/>
                             <i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon" onClick={adminsearch}></i></div>
                             <div className="col-4">
                                 <div className='admin-add-button mx-2' onClick={()=> { setAdminChoose('edit'); setEditBook(null)}}>

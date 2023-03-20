@@ -92,7 +92,7 @@ function Cart(){
                                 <span>Tổng tiền</span>
                                 <span>{currencyFormat(total)}</span>
                             </div>
-                            <Link to={(state.loginAccount == "") ? "/login" :"/order"} state={{cart: cart}}><button>ĐẶT HÀNG</button></Link>  
+                            <Link to={(state.loginAccount == "") ? "/login" :"/checkout"} state={{cart: cart}}><button>ĐẶT HÀNG</button></Link>  
                         </div>
                     </div>
                         </>

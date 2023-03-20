@@ -1,17 +1,16 @@
 import React from "react";
+import { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import moment from 'moment'
+import { notify, currencyFormat } from "../auth.action";
 import OrderService from "../services/order.service";
 import cartService from "../services/cart.service";
-import moment from 'moment'
-import { useNavigate } from 'react-router-dom';
-import { notify, currencyFormat } from "../auth.action";
-import { useContext } from "react";
+import productService from "../services/product.service";
 import Context from "../store/Context";
 import AppHeader from "../components/common/header/AppHeader";
 import AppFooter from "../components/common/footer/AppFooter";
-import productService from "../services/product.service";
 
 function CheckOut(){
   const location = useLocation()
@@ -103,7 +102,7 @@ function CheckOut(){
                         <input type="text" class="form-control" name="lastname" 
                                 placeholder="Họ" value={formik.values.lastname}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.lastname ? "": "error_input"}/>
+                                className={formik.errors.lastname && formik.touched.lastname && "error_input"}/>
                          {formik.errors.lastname && formik.touched.lastname && (
                             <p className="form_error">{formik.errors.lastname}</p>
                         )}
@@ -112,7 +111,7 @@ function CheckOut(){
                       < input type="text" class="form-control"  name="firstname"
                                 placeholder="Tên"  value={formik.values.firstname}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.firstname? "": "error_input"}/>
+                                className={formik.errors.firstname  && formik.touched.firstname && "error_input"}/>
                        {formik.errors.firstname && formik.touched.firstname && (
                             <p className="form_error">{formik.errors.firstname}</p>
                         )}
@@ -122,7 +121,7 @@ function CheckOut(){
                     <input type="text" class="form-control" name="address" 
                                 placeholder="Số nhà"  value={formik.values.address}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.address? "": "error_input"}/> 
+                                className={formik.errors.address && formik.touched.address && "error_input"}/> 
                      {formik.errors.address && formik.touched.address && (
                             <p className="form_error">{formik.errors.address}</p>
                         )}
@@ -132,7 +131,7 @@ function CheckOut(){
                         <input type="text" class="form-control" name="city" 
                                 placeholder="Tên thành phố" value={formik.values.city}
                                 onChange={formik.handleChange} 
-                                className={!formik.errors.city? "": "error_input"}/>
+                                className={formik.errors.city && formik.touched.city && "error_input"}/>
                          {formik.errors.city && formik.touched.city && (
                             <p className="form_error">{formik.errors.city}</p>
                         )}

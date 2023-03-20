@@ -85,7 +85,7 @@ function AppHeader() {
                         <Link to="/myorder" state={{cate: "announment"}}><li className=""><span>Thông báo</span>  
                         {state.newNotify.length !== 0 && <span className="newNumber mx-3 my-1"></span>}</li></Link>
                         <Link to="/myorder" state={{cate: "info"}}><li>Thông tin tài khoản</li></Link>
-                        {state.isAdmin && <Link to="/admin" ><li className=""><span>Quản lý cửa hàng</span></li></Link> }
+                        {/* {state.isAdmin && <Link to="/admin" ><li className=""><span>Quản lý cửa hàng</span></li></Link> } */}
                         <li onClick={handlelogout} className="logout">Đăng xuất</li>
                       </ul>
                     </div>}

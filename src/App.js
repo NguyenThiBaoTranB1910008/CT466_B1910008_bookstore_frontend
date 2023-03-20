@@ -34,7 +34,7 @@ function App() {
               <Route path="/menu/:q" element={<Category/>}/>
               <Route path="/cart" element={<Cart/>}/>
               <Route path="/product/:id" element={<Detail/>}/>
-              <Route path="/order" element={<CheckOut/>}/>
+              <Route path="/checkout" element={<CheckOut/>}/>
               <Route path="/myorder" element={<Account/>}/>
               <Route path="/admin" element={<AdminPage/>}/>
               <Route path="/admin/editbook" element={<AdminBookDetail/>}/>
