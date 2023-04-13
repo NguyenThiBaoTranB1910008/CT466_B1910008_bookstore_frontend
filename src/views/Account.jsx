@@ -2,7 +2,6 @@ import { useEffect, useState, useContext } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import Context from "../store/Context";
 import userService from "../services/user.service";
-import announceService from "../services/announce.service";
 import { notify } from "../auth.action"
 import AccountInfo from "../components/account/AccountInfo"
 import Announment from "../components/account/Announment";
@@ -17,8 +16,6 @@ function Account(){
     const [choose, setChoose] = useState(cate)
     const [idfocus, setIdfocus] = useState(0)
     const [user, setUser] = useState({})
-    const [announments, setAnnounment] = useState([])
-    const [nonseen, setNonseen] = useState([])
     const navigate = useNavigate()
     const watchDetail=(id) => {
         setIdfocus(id)
@@ -36,25 +33,6 @@ function Account(){
         }
         }
         fetchData()
-    },[])
-
-    useEffect(()=>{
-        const fetchOrder = async() =>{
-            try{
-                const apiannounce = await announceService.get(state.loginAccount)
-                var seen = []
-                apiannounce.map((announment)=>{
-                    if(announment.status===0)
-                    seen.push(announment.id)
-                })
-                setNonseen(seen)
-                setAnnounment(apiannounce)
-            }
-            catch(error){
-                console.log(error);
-            }
-        }
-        fetchOrder()
     },[])
 
     const handlelogout = ()=>{
@@ -93,7 +71,7 @@ function Account(){
                     choose === "order" && <MyOrder idfocus={idfocus}/>
                 }
                 {
-                    choose === "announment" && <Announment setChoose={watchDetail} announments={announments} nonseen={state.newNotify}/>
+                    choose === "announment" && <Announment setChoose={watchDetail}/>
                 }
                                 {
                     choose === "info" && <AccountInfo user={user}/>

@@ -1,14 +1,13 @@
 import { useState} from 'react';
+import { useEffect } from 'react';
 
-function BrandFilter({handleFilters}){
+function BrandFilter({handleFilters, brand}){
     const brands =[
         {
-            id:1,
             name: "NXB Kim Đồng",
             imgUrl: "https://upload.wikimedia.org/wikipedia/vi/3/3b/Logo_nxb_Kim_%C4%90%E1%BB%93ng.png"
         },
         {
-            id:2,
             name: "NXB Trẻ",
             imgUrl: "https://designercomvn.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2018/09/12031437/top-7-thiet-ke-logo-nha-xuat-ban-sach-dac-sac-001.png"
         },
@@ -50,7 +49,12 @@ function BrandFilter({handleFilters}){
         handleFilters('brand',newChecked)
     }
 
-      
+    useEffect(()=>{
+        if(brand){
+            handleToggle(brand)
+        }
+    },[])
+
     return(
         <>
             <div className="category-filter pt-5">

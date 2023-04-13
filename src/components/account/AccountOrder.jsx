@@ -107,7 +107,7 @@ function MyOrder({idfocus}){
                                     }</div>
                                 <div className="col-1 order-item-icon"><i class="fa-solid fa-angles-down" onClick={()=>openDetail(order.id)}></i></div>
                             </div>
-                            <div className={"order-detail-all " + ` ${order.id}`}>
+                            <div className={"order-detail-all " + ` ${order.id}`} style={{'max-height':'0px'}}>
                                 {   
                                     (!orderdetails[order.id]) ? "" :
                                     orderdetails[order.id].map((detail)=>(

@@ -50,8 +50,8 @@ function BookManagement({setEditBook, setAdminChoose}){
                     <h1 className='admin-action'>Sách</h1>
                         <div className="admin-search row">
                             <div className="col-8">
-                            <input className="form-control me-2 py-2 px-3" id="admin-input" type="text" placeholder="Tìm kiếm" onChange={adminsearch}/>
-                            <i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon" onClick={adminsearch}></i></div>
+                                <input className="form-control me-2 py-2 px-3" id="admin-input" type="text" placeholder="Tìm kiếm" onChange={adminsearch}/>
+                                <i className="fa-sharp fa-solid fa-magnifying-glass header-input-icon" onClick={adminsearch}></i></div>
                             <div className="col-4">
                                 <div className='admin-add-button mx-2' onClick={()=> { setAdminChoose('edit'); setEditBook(null)}}>
                                 <i class="fa-solid fa-plus"></i>

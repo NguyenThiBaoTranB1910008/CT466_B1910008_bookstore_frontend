@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams, useLocation} from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import ListBook from "../components/books/ListBook"
 import ProductService from "../services/product.service"
 import BrandFilter from "../components/category/filter/BrandFilter"
@@ -10,22 +10,25 @@ import AppFooter from "../components/common/footer/AppFooter"
 
 function Caterory(){
     const [books, setBooks] = useState([])
-    const [bookSize, setBookSize] = useState(0)
     const [order, setOrder] = useState("Sắp xếp theo giá")
-    const {q} = useParams()
     const location = useLocation()
-    const { cate } = location.state // "useLocation" to get the state
-    const [filter, setFilter] = useState({})
+    const search = new URLSearchParams(location.search).get('search')
+    const brand = new URLSearchParams(location.search).get('brand')
+    const [filter, setFilter] = useState({category: location.state.cate || ""})
 
     useEffect(()=>{
-        setFilter({...filter, category: cate ? cate : ""})
-    },[])
+        if(search){
+            handleFilters('search',search)
+        }
+        if(brand){
+            handleFilters('brand',[brand])
+        }
+    },[location.state.reMenu])
 
     useEffect(() => {
         async function fetchData(){
             try {
                     var apibooks = await ProductService.getByFilter(filter)
-                    setBookSize(apibooks.length)
                     setBooks(apibooks)    
                 }
                 catch (error) {
@@ -35,16 +38,8 @@ function Caterory(){
         fetchData()
     },[filter])
 
-    useEffect(()=>{
-        if(q !== undefined){
-            handleFilters('search',q)
-        }
-    },[q])
-
     const handleFilters = ( item, filters) => {
-
         const newFilters = {...filter}
-
         if (item === "price") {
             const min = document.getElementById("minprice")
             const max = document.getElementById("maxprice")
@@ -53,9 +48,9 @@ function Caterory(){
         }
         else if(item === "order"){
             if(filters==="Giảm dần")
-                newFilters[item] = 'DESC'
+            newFilters[item] = 'DESC'
             else
-                newFilters[item] = 'ASC'
+            newFilters[item] = 'ASC'
             const orderList = document.getElementById('orderList')
             orderList.classList.add('none')
             setOrder(filters)
@@ -63,7 +58,6 @@ function Caterory(){
         else{
             newFilters[item] = filters
         }
-
         setFilter(newFilters)
     }
 
@@ -85,13 +79,13 @@ function Caterory(){
                 <div className="col-3 filter">
                     <CategoryFilter filter={filter} handleFilters={handleFilters}/>
                     <PriceFilter handleFilters={handleFilters}/>
-                    <BrandFilter handleFilters={handleFilters}/> 
+                    <BrandFilter handleFilters={handleFilters} brand={brand}/> 
                 </div>
                 <div className="col-9">
                     <div className="listinfo">
                         <div className="">
-                            {q === undefined ?  "" :<span>Kết quả tìm kiếm với từ khóa "<b>{q}</b>":</span>}
-                            <div>Số lượng: {bookSize} sản phẩm</div>
+                            {search ? <span>Kết quả tìm kiếm với từ khóa "<b>{search}</b>":</span> : ""}
+                            <div>Số lượng: {books.length} sản phẩm</div>
                         </div>
                         <div className="orderBox">
                             <div class="mainOrder">{order}</div>

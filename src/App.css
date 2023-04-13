@@ -220,6 +220,7 @@ hr{
 }
 
 .brand-item img{
+  margin-left: 15px;
 width: 80%;
 height: auto;
 }
@@ -717,7 +718,7 @@ li.selected, .selected{
 
 .order-detail-all{
   transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
-  max-height:0;
+  max-height: 0px;
   overflow: hidden;
 }
 
@@ -864,9 +865,15 @@ textarea{
   margin-top: 20px!important;
 }
 
-.book-overview .header-input-icon{
+.book-overview .header-input-icon, .user-overview .header-input-icon{
   right: 130px;
   top:64px;
+  width: 50px;
+}
+
+.user-overview .header-input-icon{
+  right: 10px;
+  top:60px;
   width: 50px;
 }
 

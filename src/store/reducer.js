@@ -1,21 +1,21 @@
-
 const initState = {
     loginAccount:  localStorage.getItem('user') ?? "",
     isAdmin: false,
-    cartItem: 0,
+    cartItem: parseInt(localStorage.getItem('cartlength')) ??  0,
     newNotify: [] 
 }
 
 const LOGIN_ACTION = "login"
 const LOGOUT_ACTION = "logout"
+const UPDATE_CART_NUMBER= "updatecart"
 const INCREASE_CART_NUMBER= "incart"
 const DECREASE_CART_NUMBER= "decart"
-const UPDATE_CART = "updatecart"
 const SEEN_NOTIFY = "seen"
 
 function reducer(state, action){
     switch (action.type){
         case LOGIN_ACTION:
+            localStorage.setItem('cartlength', action.cartItem )
             return {
                 // ...state,
                 loginAccount:action.name,
@@ -30,20 +30,25 @@ function reducer(state, action){
                 loginAccount: "",
                 isAdmin: false,
             }
+        case UPDATE_CART_NUMBER:
+            localStorage.setItem('cartlength',action.cartItem)
+            return{
+                ...state,
+                cartItem: action.cartItem,
+            }
         case INCREASE_CART_NUMBER:
+            var cartlength= parseInt(state.cartItem) + 1;
+            localStorage.setItem('cartlength',cartlength)
             return{
                 ...state,
                 cartItem: state.cartItem + 1
             }
         case DECREASE_CART_NUMBER:
+            cartlength= parseInt(state.cartItem) - 1;
+            localStorage.setItem('cartlength', cartlength )
             return{
                 ...state,
                 cartItem: state.cartItem - 1
-            }
-        case UPDATE_CART:
-            return{
-                ...state,
-                cartItem: action.cartItem
             }
         case SEEN_NOTIFY:
             return{

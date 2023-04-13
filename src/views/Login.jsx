@@ -37,7 +37,6 @@ function Login(){
                           var newnotify1 = await announceService.newNotify(values.accname)
                           var seen = []
                           newnotify1.map((announment)=>{
-                            if(announment.status===0)
                             seen.push(announment.id)
                         })
                         dispatch({

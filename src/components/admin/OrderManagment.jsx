@@ -48,7 +48,7 @@ function OrderManagment(){
         var announment = {
             date: moment().format("DD/MM/YYYY, h:mm:ss a"),
             user : order.accname,
-            content: "Đơn hàng đã được xác nhận và đang trên đường giao đến bạn.",
+            content: `Đơn hàng ( id=${order.id} ) đã được xác nhận và đang trên đường giao đến bạn.`,
             idOrder: order.id
         }
         
@@ -61,6 +61,7 @@ function OrderManagment(){
             try{
                 notify("success", "Xác nhận đơn hàng thành công")
                 await orderService.confirm(a)
+                console.log(announment)
                 await announceService.create(announment)
                 setFilter({...filter, changeData: !filter.changeData})
             }
@@ -68,7 +69,6 @@ function OrderManagment(){
                 console.log(error);
             }
         }
-
         confirmOrder()
     }
 
@@ -159,12 +159,11 @@ function OrderManagment(){
                                     </div>
                                 </div>
                             </div>
-                            <div className={"order-detail-all " + ` ${order.id}`}>
+                            <div className={"order-detail-all" + ` ${order.id}`} style={{'max-height':'0px'}}> 
                                 {   
                                     (!orderdetails[order.id]) ? "" :
                                     orderdetails[order.id].map((detail)=>(
                                         <div className="order-detail row p-1">
-                                            {/* <div className="col-1"></div> */}
                                             <div className="order-detail-img col-2">
                                                 <img src={detail.imgUrl} alt="" />
                                             </div>

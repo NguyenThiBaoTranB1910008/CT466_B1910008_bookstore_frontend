@@ -88,7 +88,7 @@ function Detail(){
              imgUrl: book.imageUrl,
              quantity: parseInt( quantity.value)
            }
-           navigate('/order', {state: {cart: [cartItem]}} )
+           navigate('/checkout', {state: {cart: [cartItem]}} )
         }
     }
     
