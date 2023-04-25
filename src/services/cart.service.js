@@ -12,8 +12,9 @@ class CartService {
     async create(data) {
         return (await this.api.post("/", data)).data;
     }
-    async deleteAll() {
-        return (await this.api.delete("/")).data;
+    async deleteAll(user) {
+        console.log(user)
+        return (await this.api.delete(`/order/${user}`)).data;
     }
     async update(id, data) {
         return (await this.api.put(`/${id}`, data)).data;

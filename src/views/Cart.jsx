@@ -1,6 +1,7 @@
 import {useState, useEffect, useContext} from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import CartService from '../services/cart.service'
+import ProductService from '../services/product.service'
 import Context from "../store/Context";
 import { currencyFormat } from '../auth.action'
 import Modal from '../components/common/Modal'
@@ -11,6 +12,7 @@ import AppHeader from '../components/common/header/AppHeader'
 
 function Cart(){
     const [cart, setCart] = useState([])
+    const [products, setProducts] = useState([])
     const [changQuality, setChangQuality] = useState(false)
     const [total, setTotal] = useState(0)
     const [state, dispatch] = useContext(Context)
@@ -18,6 +20,7 @@ function Cart(){
     const navigate = useNavigate()
     var totalprice
     var apicart=[]
+    var apiproduct= []
     useEffect(()=>{
         async function fetchData(){
             try {
@@ -38,12 +41,45 @@ function Cart(){
             fetchData()
     },[changQuality]);
 
+    useEffect(()=>{
+        async function fetchData(){
+            try {
+                apiproduct = await ProductService.getAll();
+                setProducts(apiproduct)
+                for(var i=0; i< cart.length ; i++){
+                    apiproduct.map(async(pro)=>{
+                        if(pro['id'] == cart[i].idbook && pro['quantity'] < cart[i].quantity){
+                            cart[i].quantity = pro['quantity']
+                            try {
+                                await CartService.update(cart[i].id, cart[i]);    
+                            } catch (error) {
+                                console.log(error);
+                            }
+                            setChangQuality(!changQuality)
+                        }
+                    })
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData()
+    },[]);
+
     const setQualityCart = async (id, quantity) => {
         const cartExit = cart.find((item) => item.id === id)
         if (quantity <=0 ) 
             cartExit.quantity = 1
         else 
             cartExit.quantity = quantity
+        cart.map((item) =>{
+            if(item.id === id) 
+                products.map((pro)=>{
+                    if(pro['id'] == item.idbook && pro['quantity'] < quantity){
+                        cartExit.quantity = pro['quantity']
+                    }
+                })
+        })
 
         try {
             await CartService.update(id, cartExit);    

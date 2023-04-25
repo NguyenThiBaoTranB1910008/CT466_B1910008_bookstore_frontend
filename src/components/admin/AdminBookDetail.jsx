@@ -229,7 +229,7 @@ function AdminBookDetail({editbook, setAdminChoose}){
                             <textarea type="text"  rows="7" class="form-control" name="description" 
                                         placeholder="Mô tả"  value={formik.values.description}
                                         onChange={formik.handleChange} 
-                                        className={!formik.errors.description && formik.touched.description && "error_input"}/> 
+                                        className={formik.errors.description && formik.touched.description && "error_input"}/> 
                             {formik.errors.description && formik.touched.description && (
                                     <p className="form_error">{formik.errors.description}</p>
                                 )}

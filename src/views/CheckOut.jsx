@@ -63,7 +63,7 @@ function CheckOut(){
           try{
               await OrderService.create(order)
               notify('success',"Đặt hàng thành công")
-              await cartService.deleteAll()
+              await cartService.deleteAll(localStorage.getItem('user'))
               cart.map(async (cartitem) => {
                 await productService.order(cartitem.idbook, {id: cartitem.idbook, quantity: cartitem.quantity})
               })

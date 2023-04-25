@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import orderService from "../../services/order.service"
-import { currencyFormat } from "../../auth.action"
+import { currencyFormat, notify } from "../../auth.action"
 import EmptyCart from "../cart/EmptyCart"
 
 
@@ -14,18 +14,16 @@ function MyOrder({idfocus}){
         shipped: "Hoàn thành",
         cancel: "Đã hủy"
     }
+
     useEffect(()=>{
-        var newOrderDetail 
         const fetchOrder = async() =>{
             try{
                 const apiorder = await orderService.getByFilter(filter)
+                for(var i=0; i< apiorder.length; i++){
+                        const apidetail = await orderService.getDetail(apiorder[i].id)
+                        apiorder[i].detail = apidetail
+                }
                 setOrder(apiorder)
-                apiorder.map(async(order) =>{
-                    newOrderDetail = {...orderdetails}
-                    const apidetail = await orderService.getDetail(order.id)
-                    newOrderDetail[order.id] = apidetail
-                    setOrderDetail(newOrderDetail)
-                })
             }
             catch(error){
                 console.log(error);
@@ -48,6 +46,21 @@ function MyOrder({idfocus}){
             try{
                 await orderService.confirm({id:id, type: "shipped"})
                 setFilter({...filter, changeData: !filter.changeData})
+                notify("success", "Đơn hàng đã hoàn thành")
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+        confirmOrder()
+    }
+
+    const cancel = (id) =>{
+        const confirmOrder = async() =>{
+            try{
+                await orderService.confirm({id:id, type: "cancel"})
+                setFilter({...filter, changeData: !filter.changeData})
+                notify("success", "Đơn hàng đã được hủy")
             }
             catch(error){
                 console.log(error);
@@ -104,13 +117,19 @@ function MyOrder({idfocus}){
                                         <div className="admin-edit-button mt-2"
                                         onClick={() => shipped(order.id)}>Đã nhận
                                         </div> 
+                                    }
+                                    {
+                                        order.status === "wait" &&
+                                        <div className="admin-delete-button mt-2"
+                                        onClick={() => cancel(order.id)}>Hủy đơn
+                                        </div> 
                                     }</div>
                                 <div className="col-1 order-item-icon"><i class="fa-solid fa-angles-down" onClick={()=>openDetail(order.id)}></i></div>
                             </div>
                             <div className={"order-detail-all " + ` ${order.id}`} style={{'max-height':'0px'}}>
                                 {   
-                                    (!orderdetails[order.id]) ? "" :
-                                    orderdetails[order.id].map((detail)=>(
+                                    // (!orderdetails[order.id]) ? "" :
+                                    order.detail.map((detail)=>(
                                         <div className="order-detail row p-1">
                                             {/* <div className="col-1"></div> */}
                                             <div className="order-detail-img col-2">

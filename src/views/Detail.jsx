@@ -44,7 +44,7 @@ function Detail(){
         }
         if(state.loginAccount === "")
             notify('warning',"Đăng nhập vào tài khoản để mua hàng bạn nhé")
-        else if (!bookExit){
+        else if (bookExit.length ===0){
            var cartItem={
              user: state.loginAccount,
              idbook : book.id,   
@@ -65,9 +65,9 @@ function Detail(){
             
             notify("success","Đã thêm sản phẩm vào giỏ hàng")
         }else{
-           bookExit.quantity= bookExit.quantity + parseInt( quantity.value)
+           bookExit[0].quantity= bookExit[0].quantity + parseInt( quantity.value)
             try {
-               await CartService.update(bookExit.id, bookExit)
+               await CartService.update(bookExit[0].id, bookExit[0])
             } catch (error) {
                console.log(error);
             }
@@ -133,6 +133,7 @@ function Detail(){
                         <p className='book-price detail-price'>{currencyFormat(book.price)}</p>
                         <p className="detail-title">
                             Thông tin
+                            <span style={{textAlign:'right'}}>Kho : {book.quantity}</span>
                         </p>
                         <ul className='detail-info'>
                             <li>

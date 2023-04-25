@@ -25,13 +25,13 @@ function AccountInfo({user}){
           .required("Required!")
         }),
         onSubmit: values => {
-            notify("success","Cập nhật thông tin người dùng thành công")
             const update= async () =>{
                 try{
                     const newuser= {...user, 
-                                    fullname: values.fullname,
-                                    pass:values.pass} 
+                        fullname: values.fullname,
+                        pass:values.pass} 
                     await userService.update(newuser)
+                    notify("success","Cập nhật thông tin người dùng thành công")
                 }
                 catch(error){
                     console.log(error);

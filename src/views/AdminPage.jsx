@@ -40,7 +40,6 @@ function AdminPage(){
                 </div>
                 {
                     adminChoose === 'book' && <BookManagement setEditBook={setEditBook} setAdminChoose={setAdminChoose}/>
-
                 }
                 {
                     adminChoose === 'user' && <UserManagement/>

@@ -20,13 +20,11 @@ function OrderManagment(){
         const fetchOrder = async() =>{
             try{
                 const apiorder = await orderService.getByFilter(filter)
+                for(var i=0; i< apiorder.length; i++){
+                        const apidetail = await orderService.getDetail(apiorder[i].id)
+                        apiorder[i].detail = apidetail
+                }
                 setOrders(apiorder)
-                apiorder.map(async(order) =>{
-                    newOrderDetail = {...orderdetails}
-                    const apidetail = await orderService.getDetail(order.id)
-                    newOrderDetail[order.id] = apidetail
-                    setOrderDetail(newOrderDetail)
-                })
             }
             catch(error){
                 console.log(error);
@@ -61,7 +59,6 @@ function OrderManagment(){
             try{
                 notify("success", "Xác nhận đơn hàng thành công")
                 await orderService.confirm(a)
-                console.log(announment)
                 await announceService.create(announment)
                 setFilter({...filter, changeData: !filter.changeData})
             }
@@ -76,7 +73,7 @@ function OrderManagment(){
         var announment = {
             date: moment().format("DD/MM/YYYY, h:mm:ss a"),
             user : order.accname,
-            content: "Xin lỗi, đơn hàng không thành công.",
+            content: "Xin lỗi, hiện tại cửa hàng không thể thực hiện đơn hàng của bạn.",
             idOrder: order.id
         }
 
@@ -161,8 +158,8 @@ function OrderManagment(){
                             </div>
                             <div className={"order-detail-all" + ` ${order.id}`} style={{'max-height':'0px'}}> 
                                 {   
-                                    (!orderdetails[order.id]) ? "" :
-                                    orderdetails[order.id].map((detail)=>(
+                                    // (!orderdetails[order.id]) ? "" :
+                                    order.detail.map((detail)=>(
                                         <div className="order-detail row p-1">
                                             <div className="order-detail-img col-2">
                                                 <img src={detail.imgUrl} alt="" />

@@ -31,8 +31,8 @@ function AppFooter(){
                 <div className="container">
                     <div className="footer-nav" >
                         <Link className="navbar-brand" to="/">
-                            <img src="./book1.png" alt="" className="logo"/>
-                            <img src="./name1.png" />
+                            <img src="http://localhost:3000/book1.png" alt="" className="logo"/>
+                            <img src="http://localhost:3000/name1.png" />
                         </Link>
                         <div className="caterory-title">
                             <h2 className="m-0 logan">Lấy cảm hứng và bắt đầu truyền cảm hứng</h2>

@@ -5,7 +5,7 @@ import Modal from '../common/Modal';
 
 function BookManagement({setEditBook, setAdminChoose}){
     const [books, setBooks]= useState([])
-    const [filter, setFilter] = useState({})
+    const [filter, setFilter] = useState({change: false})
     const [activeModal, setActiveModal] = useState(false)
     async function fetchData(){
         try{
@@ -28,6 +28,10 @@ function BookManagement({setEditBook, setAdminChoose}){
 
     useEffect(()=>{
         fetchData()
+    })
+
+    useEffect(()=>{
+        fetchData()
     },[filter])
 
     const adminsearch = ()=>{
@@ -38,7 +42,7 @@ function BookManagement({setEditBook, setAdminChoose}){
     const deleteBook = (id) =>{
         deleteB(id)
         setActiveModal(false)
-        setFilter({change: true})
+        setFilter({change: !filter.change})
         notify("success", "Xóa sản phẩm thành công")
     }
 
