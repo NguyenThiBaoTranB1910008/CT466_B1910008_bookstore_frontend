@@ -12,6 +12,7 @@ import AdminBookDetail from './components/admin/AdminBookDetail';
 import CheckOut from './views/CheckOut';
 import Account from './views/Account';
 import AdminPage from './views/AdminPage';
+import Review from './views/Review.jsx'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="/product/:id" element={<Detail/>}/>
               <Route path="/checkout" element={<CheckOut/>}/>
               <Route path="/myorder" element={<Account/>}/>
+              <Route path="/review" element={<Review/>}/>
               <Route path="/admin" element={<AdminPage/>}/>
               <Route path="/admin/editbook" element={<AdminBookDetail/>}/>
            </Routes> 

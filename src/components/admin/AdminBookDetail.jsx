@@ -11,7 +11,6 @@ function AdminBookDetail({editbook, setAdminChoose}){
     const [selectedImage, setSelectedImage] = useState({
         imgUrl:  book ? book.imageUrl : "",
         changeUrl:  false});
-    const navigate = useNavigate()
 
     var initBook ={
         title: "",
@@ -24,7 +23,12 @@ function AdminBookDetail({editbook, setAdminChoose}){
         brand: "",
         language: "",
         releaseDate: "",
-        description:""
+        size:"",
+        type: "",
+        description:"",
+        highlight1: "",
+        highlight2: "",
+        highlight3: ""
     }
 
     if(book !==  null)
@@ -92,7 +96,12 @@ function AdminBookDetail({editbook, setAdminChoose}){
             brand: Yup.string().required("brand is required"),
             language: Yup.string().required("language is required"),
             releaseDate: Yup.string().required("releaseDate is required"),
-            description: Yup.string().required("description is required"),
+            size: Yup.string().required("Size is required"),
+            type: Yup.string().required("Type is required"),
+            highlight1: Yup.string().required("Highlight1 is required"),
+            highlight2: Yup.string().required("Highlight2 is required"),
+            highlight3: Yup.string().required("Highlight3 is required"),
+            description: Yup.string().required("description is required")
         }),
         onSubmit: values => {
             if(selectedImage.changeUrl)
@@ -203,6 +212,26 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                     )}
                         </div>
                     </div>
+                    <div className="row">
+                        <div class="field col-6">
+                                <input type="text" class="form-control" name="size" 
+                                            placeholder="Kích thước"  value={formik.values.size}
+                                            onChange={formik.handleChange} 
+                                            className={formik.errors.size && formik.touched.size && "error_input"}/> 
+                                {formik.errors.size && formik.touched.size && (
+                                        <p className="form_error">{formik.errors.size}</p>
+                                    )}
+                        </div>
+                        <div class="field col-6">
+                                <input type="text" class="form-control" name="type" 
+                                            placeholder="Loại bìa"  value={formik.values.type}
+                                            onChange={formik.handleChange} 
+                                            className={formik.errors.type && formik.touched.type && "error_input"}/> 
+                                {formik.errors.type && formik.touched.type && (
+                                        <p className="form_error">{formik.errors.type}</p>
+                                    )}
+                        </div>
+                    </div>
                         <div className="row">
                             <div class="field col-6">
                                     <input type="number" class="form-control" name="page" 
@@ -225,8 +254,35 @@ function AdminBookDetail({editbook, setAdminChoose}){
                             </select>  
                             </div> 
                         </div>
+                        <div className="field">
+                        <input type="text" class="form-control" name="highlight1"  
+                                        placeholder="Đặc điểm nổi bật 1" value={formik.values.highlight1}
+                                        onChange={formik.handleChange} 
+                                        className={formik.errors.highlight1 && formik.touched.highlight1 &&  "error_input"}/>
+                        {formik.errors.highlight1 && formik.touched.highlight1 &&  (
+                                    <p className="form_error">{formik.errors.highlight1}</p>
+                                )}
+                        </div>
+                        <div className="field">
+                        <input type="text" class="form-control" name="highlight2"  
+                                        placeholder="Đặc điểm nổi bật 2" value={formik.values.highlight2}
+                                        onChange={formik.handleChange} 
+                                        className={formik.errors.highlight2 && formik.touched.highlight2 &&  "error_input"}/>
+                        {formik.errors.highlight2 && formik.touched.highlight2 &&  (
+                                    <p className="form_error">{formik.errors.highlight2}</p>
+                                )}
+                        </div>    
+                        <div className="field">
+                        <input type="text" class="form-control" name="highlight3"  
+                                        placeholder="Đặc điểm nổi bật 3" value={formik.values.highlight3}
+                                        onChange={formik.handleChange} 
+                                        className={formik.errors.highlight3 && formik.touched.highlight3 &&  "error_input"}/>
+                        {formik.errors.highlight3 && formik.touched.highlight3 &&  (
+                                    <p className="form_error">{formik.errors.highlight3}</p>
+                                )}
+                        </div>        
                     <div class="">
-                            <textarea type="text"  rows="7" class="form-control" name="description" 
+                            <textarea type="text"  rows="10" class="form-control" name="description" 
                                         placeholder="Mô tả"  value={formik.values.description}
                                         onChange={formik.handleChange} 
                                         className={formik.errors.description && formik.touched.description && "error_input"}/> 

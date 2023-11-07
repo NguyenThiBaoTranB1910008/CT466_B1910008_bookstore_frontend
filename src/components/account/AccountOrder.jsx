@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import orderService from "../../services/order.service"
 import { currencyFormat, notify } from "../../auth.action"
 import EmptyCart from "../cart/EmptyCart"
-
+import { Link} from "react-router-dom"
 
 function MyOrder({idfocus}){
     const [orders, setOrder] = useState([])
@@ -112,18 +112,7 @@ function MyOrder({idfocus}){
                                 <div className="col-2">{order.dayOrder}</div>
                                 <div className="col-2">{order.note}</div>
                                 <div className="col-2"> {status[order.status]}
-                                    {
-                                        order.status === "process" &&
-                                        <div className="admin-edit-button mt-2"
-                                        onClick={() => shipped(order.id)}>Đã nhận
-                                        </div> 
-                                    }
-                                    {
-                                        order.status === "wait" &&
-                                        <div className="admin-delete-button mt-2"
-                                        onClick={() => cancel(order.id)}>Hủy đơn
-                                        </div> 
-                                    }</div>
+                                </div>
                                 <div className="col-1 order-item-icon"><i class="fa-solid fa-angles-down" onClick={()=>openDetail(order.id)}></i></div>
                             </div>
                             <div className={"order-detail-all " + ` ${order.id}`} style={{'max-height':'0px'}}>
@@ -148,8 +137,33 @@ function MyOrder({idfocus}){
                                     ))
                                 }
                                 <div className="order-detail-total">
-                                    <span>Tổng đơn hàng:</span>
-                                    <span className="px-2">{currencyFormat(order.total)}</span>
+                                    <span>
+                                        <span>Tổng đơn hàng:</span>
+                                        <span className="px-2">{currencyFormat(order.total)}</span>
+                                    </span>
+                                    {
+                                        order.status === "process" &&
+                                        <div className="admin-edit-button mt-2"
+                                        onClick={() => shipped(order.id)}>Đã nhận
+                                        </div> 
+                                    }
+                                    {
+                                        order.status === "wait" &&
+                                        <div className="admin-delete-button mt-2"
+                                        onClick={() => cancel(order.id)}>Hủy đơn
+                                        </div> 
+                                    }
+                                    {
+                                        order.status === "shipped" &&
+                                        <Link to='/review' className="menu" state={{order: order}}>
+                                             <div className="admin-add-button mt-2">
+                                           Đánh giá
+                                            </div> 
+                                        </Link>
+                                        // <div className="admin-add-button mt-2"
+                                        // onClick={() => cancel(order.id)}>Đánh giá
+                                        // </div> 
+                                    }
                                 </div>
                                 </div>
                             </div>

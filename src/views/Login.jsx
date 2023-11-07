@@ -42,6 +42,7 @@ function Login(){
                         dispatch({
                             type: "login",
                             name: trueUser.accname,
+                            id: trueUser.idUser,
                             cartItem: cart.length,
                             newNotify: seen,
                             isAdmin: trueUser.isadmin

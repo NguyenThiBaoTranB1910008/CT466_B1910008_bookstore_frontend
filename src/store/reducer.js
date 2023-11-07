@@ -1,5 +1,6 @@
 const initState = {
     loginAccount:  localStorage.getItem('user') ?? "",
+    loginId:  localStorage.getItem('iduser') ?? 0,
     isAdmin: false,
     cartItem: parseInt(localStorage.getItem('cartlength')) ??  0,
     newNotify: [] 
@@ -15,10 +16,13 @@ const SEEN_NOTIFY = "seen"
 function reducer(state, action){
     switch (action.type){
         case LOGIN_ACTION:
+            console.log(action)
             localStorage.setItem('cartlength', action.cartItem )
+            localStorage.setItem('iduser', action.id )
             return {
                 // ...state,
                 loginAccount:action.name,
+                loginId: action.id,
                 cartItem: action.cartItem,
                 newNotify: action.newNotify,
                 isAdmin: action.isAdmin
