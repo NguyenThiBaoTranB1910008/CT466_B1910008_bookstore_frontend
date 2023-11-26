@@ -33,20 +33,21 @@ function Detail(){
     useEffect(() => {
         fetchData()
     },[id]);
-    // console.log(book)
+
     const addToCart = async (book) =>{
         const quantity = document.getElementById('quantity') 
         var bookExit
         try {
-            bookExit= await CartService.get(book.id, {user: state.loginAccount})
+            bookExit= await CartService.get(book.id, {user: state.loginId})
+            console.log(bookExit)
         } catch (error) {
             console.log(error);
         }
-        if(state.loginAccount === "")
+        if(state.loginId === 0)
             notify('warning',"Đăng nhập vào tài khoản để mua hàng bạn nhé")
         else if (bookExit.length ===0){
            var cartItem={
-             user: state.loginAccount,
+             idUser: state.loginId,
              idbook : book.id,   
              title: book.title,
              price: book.price,

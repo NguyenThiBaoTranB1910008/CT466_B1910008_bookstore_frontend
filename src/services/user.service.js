@@ -9,6 +9,9 @@ class UserService {
     async get(accname) {
         return (await this.api.get(`/${accname}`)).data;
     }
+    async getById(id) {
+        return (await this.api.get(`/${id}`)).data;
+    }
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
     }

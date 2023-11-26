@@ -47,7 +47,6 @@ function CheckOut(){
     return total
   }
 
-
   const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
   const formik = useFormik({
     initialValues: {
@@ -71,22 +70,41 @@ function CheckOut(){
         ward: Yup.string().required("Ward is required"),
     }),
     onSubmit: values => {
-      dispatch({
-        type: "updatecart",
-        cartItem: 0
-      })
-      const order={
-        ...values,
-        accname: localStorage.getItem('user'),
-        cart: cart,
-        dayOrder:  moment().format("DD/MM/YYYY, h:mm:ss a"),
-        total: getTotal() + getTotal()*5/100
-      }
+      var myaddress = values.address
+        listWard.map((item) => {
+            if(item.WardCode == values.ward){
+                myaddress= myaddress + ", "+ item.WardName;
+            }
+        })
+        listDistrict.map((item) => {
+            if(item.DistrictID == values.district){
+                console.log()
+                myaddress= myaddress + ", "+ item.DistrictName;
+            }
+        })
+        listProvince.map((item) => {
+            if(item.ProvinceID == values.city){
+                myaddress= myaddress + ", "+ item.ProvinceName;
+            }
+        })
+        const order={
+            ...values,
+            address: myaddress,
+            idUser: state.loginId,
+            cart: cart,
+            dayOrder:  moment().format("DD/MM/YYYY, h:mm:ss a"),
+            totalItems: getTotal() ,
+            total: getTotal() + listFee
+        }
+        dispatch({
+            type: "updatecart",
+            cartItem: 0
+        })
       const addOrder = async () =>{
           try{
               await OrderService.create(order)
               notify('success',"Đặt hàng thành công")
-              await cartService.deleteAll(localStorage.getItem('user'))
+              await cartService.deleteAll(state.loginId)
               cart.map(async (cartitem) => {
                 await productService.order(cartitem.idbook, {id: cartitem.idbook, quantity: cartitem.quantity})
               })
@@ -155,7 +173,6 @@ function CheckOut(){
     }
 
     const getFee = (serviceID, toWardCode, toDistrict) => {
-        console.log(toDistrict,toWardCode)
         axios.get(
             apiFee,
             {

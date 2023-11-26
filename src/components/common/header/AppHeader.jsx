@@ -54,7 +54,7 @@ function AppHeader() {
                 </form>
                 {(state.loginAccount === "") ? <Link to="/login"><div className="login-text">Đăng nhập</div></Link> :
                     <div className="header-icon px-3">
-                      <i className="fa-solid fa-user px-1" onClick={()=>setshowMenu(!showMenu)}></i>
+                      <i className="fa-solid fa-user p-x1" onClick={()=>setshowMenu(!showMenu)}></i>
                       <ul className="sub-user" style={{display: (showMenu) ? "block" : "none"}} onClick={()=>setshowMenu(false)}>
                         <div className="hello-text">
                           Hello, {userName}

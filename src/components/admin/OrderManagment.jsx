@@ -52,7 +52,8 @@ function OrderManagment(){
         
         var a ={
             id: order.id,
-            type: "process"
+            type: "process",
+            dayConfirm: moment().format("DD/MM/YYYY, h:mm:ss a")
         }
 
         const confirmOrder = async() =>{
@@ -131,7 +132,7 @@ function OrderManagment(){
                         <div className="order-item row">
                             <div className="row order-info">
                                 <div className="col-1">{index+1}</div>
-                                <div className="col-1">{order.accname}</div>
+                                <div className="col-1">{order.idUser}</div>
                                 <div className="col-2">{order.address}</div>
                                 <div className="col-2">{order.dayOrder}</div>
                                 <div className="col-2">{order.note}</div>

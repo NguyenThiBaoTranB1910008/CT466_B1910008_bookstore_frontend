@@ -79,7 +79,7 @@ header form{
   font-size: 20px;
   position: absolute;
   top: 5.5px;
-  left: 2.7px;
+  left: 6.7px;
 }
 
 .main{
@@ -246,6 +246,11 @@ border: 1px solid  #e0dede;
   padding: 20px 50px 20px;
   display: flex;
   flex-wrap: nowrap;
+}
+
+.beween{
+  display: flex;
+  justify-content: space-between;
 }
 
 .connect .row{
@@ -1155,8 +1160,8 @@ textarea{
 
 .modal-body .price{
   font-size: 14px;
-    font-weight: 700;
-    color: #0060ae
+  font-weight: 700;
+  color: #0060ae
 }
 
 .none{
@@ -1278,7 +1283,7 @@ textarea{
   font-size: 22px;
 }
 
-.detail-salebox, .detailbook-info, .detail-comment{
+.detail-salebox, .detailbook-info, .detail-comment, .order-address, .user-address, .new-adress{
   width: 100%;
   font-family: Nunito,serif;
   padding: 20px;
@@ -1287,10 +1292,20 @@ textarea{
   box-shadow: 0 0 10px rgb(229 229 229 / 80%);
 }
 
+.account-info{
+  border: 1px solid #ccdfef;
+}
+
 .detail-salebox{
   height: 220px;
   width: 22%!important;
   margin-left: 3%;
+}
+
+
+.form-select:disabled ,.form-control:disabled{
+  background-color: #fff !important;
+  color:#b3b3b3
 }
 
 .detailbook-info{
@@ -1507,7 +1522,7 @@ button.boxsale-button-cart{
   align-items: center;
 }
 
-.detail-comment .detail-boximg{
+.detail-comment .detail-boximg, .review-boximg{
   width: 80px;
   height: 80px;
   border: 1px solid #e5e5e5;
@@ -1516,7 +1531,7 @@ button.boxsale-button-cart{
   margin: 8px 3px;
 }
 
-.detail-comment .detail-img, .detail-comment .uploadimg{
+.detail-comment .detail-img, .detail-comment .uploadimg, .review-boximg{
   width: 80px;
   height: 80px;
   display: flex;
@@ -1525,17 +1540,25 @@ button.boxsale-button-cart{
   border-radius: 10px;
 }
 
+.review-comment{
+  position: relative;
+}
+
 .beside{
   display: flex;
   flex-direction: row;
 }
 
-.detail-comment .uploadfile{
+.detail-comment .uploadfile, .review-uploadfile, .review-comment .uploadfile{
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+.review-mini{
+  display: flex;
 }
 
 .cancel-upload{
@@ -1571,4 +1594,66 @@ button.boxsale-button-cart{
 .detail-sum img{
   width: 16px;
   margin-right: 5px;
+}
+
+.order-address p{
+  margin: 0;
+}
+
+.right{
+  text-align: right;
+}
+
+.order-detail-item .cart-item-img{
+  flex-basis: 15%;
+}
+
+.order-detail-item .cart-item-name-price{
+  flex-basis: 80%;
+}
+
+.review-mini .cart-item-img{
+  flex-basis: 15%;
+  height: 90px;
+}
+
+.review-mini .cart-item-name-price{
+  flex-basis: 70%;
+}
+
+.review-done{
+  font-weight: 900;
+}
+
+.new-adress{
+  background-color: rgb(255, 255, 255);
+    font-size: 18px;
+    height: 60px;
+    border: 1px dashed rgb(216, 216, 216);
+    margin: 0px -12px 10px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    color: #0060ae;
+    font-weight: 700;
+}
+
+.user-address{
+  color: #000;
+}
+
+.user-address span{
+  color: rgb(7, 7, 7);
+  font-weight: 800;
+}
+
+.default-address-icon{
+  color:rgb(38, 188, 78)!important;
+  font-size: 12px;
+}
+
+.update-address{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
 }

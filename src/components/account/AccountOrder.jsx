@@ -2,12 +2,13 @@ import { useEffect, useState } from "react"
 import orderService from "../../services/order.service"
 import { currencyFormat, notify } from "../../auth.action"
 import EmptyCart from "../cart/EmptyCart"
+import moment from 'moment'
 import { Link} from "react-router-dom"
 
-function MyOrder({idfocus}){
+function MyOrder({idfocus, setIdReview, setChoose}){
     const [orders, setOrder] = useState([])
     const [orderdetails, setOrderDetail] = useState({})
-    const [filter, setFilter] = useState({changeData: false, id: localStorage.getItem('user')})
+    const [filter, setFilter] = useState({changeData: false, id: localStorage.getItem('loginId')})
     const status ={
         wait: "Chờ xác nhận",
         process:"Đang giao",
@@ -44,7 +45,7 @@ function MyOrder({idfocus}){
     const shipped = (id) =>{
         const confirmOrder = async() =>{
             try{
-                await orderService.confirm({id:id, type: "shipped"})
+                await orderService.confirm({id:id, type: "shipped", dayReceipt: moment().format("DD/MM/YYYY, h:mm:ss a")})
                 setFilter({...filter, changeData: !filter.changeData})
                 notify("success", "Đơn hàng đã hoàn thành")
             }
@@ -155,11 +156,9 @@ function MyOrder({idfocus}){
                                     }
                                     {
                                         order.status === "shipped" &&
-                                        <Link to='/review' className="menu" state={{order: order}}>
-                                             <div className="admin-add-button mt-2">
+                                             <div className="admin-add-button mt-2" onClick={()=>{setIdReview(order.id); setChoose("review")}}>
                                            Đánh giá
                                             </div> 
-                                        </Link>
                                         // <div className="admin-add-button mt-2"
                                         // onClick={() => cancel(order.id)}>Đánh giá
                                         // </div> 

@@ -18,7 +18,7 @@ function Caterory(){
         category: location.state.cate || "",
         pagination: {
             page: 1,
-            limit: 3
+            limit: 12
         }
     })
     useEffect(()=>{

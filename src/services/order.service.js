@@ -9,6 +9,9 @@ class OrderService {
     async get(accname) {
         return (await this.api.get(`/${accname}`)).data;
     }
+    async getOrderById(id) {
+        return (await this.api.get(`review/${id}`)).data;
+    }
     async create(data) {
         return (await this.api.post("/", data)).data;
     }
@@ -20,6 +23,9 @@ class OrderService {
     }
     async getByFilter(data) {
         return (await this.api.post("/filter", data)).data;
+    }
+    async reviewBook(data) {
+        return (await this.api.post("/getreview", data)).data;
     }
     
     // async deleteAll() {

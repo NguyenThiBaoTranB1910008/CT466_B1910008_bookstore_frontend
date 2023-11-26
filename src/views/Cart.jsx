@@ -24,7 +24,7 @@ function Cart(){
     useEffect(()=>{
         async function fetchData(){
             try {
-                apicart = await CartService.getAll(state.loginAccount);
+                apicart = await CartService.getAll(state.loginId);
                 setCart(apicart) 
                 totalprice=0 
                 apicart.map((cartItem) =>{
@@ -35,7 +35,7 @@ function Cart(){
                 console.log(error);
             }
         }
-        if(state.loginAccount === ""){
+        if(state.loginId === ""){
             navigate('/login')
         }else
             fetchData()

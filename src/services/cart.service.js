@@ -3,8 +3,8 @@ class CartService {
     constructor(baseUrl = "http://localhost:3001/api/cart") {
         this.api = createApiClient(baseUrl);
     }
-    async getAll(username) {
-        return (await this.api.get(`/get/${username}`)).data;
+    async getAll(id) {
+        return (await this.api.get(`/get/${id}`)).data;
     }
     async get(id,user) {
         return (await this.api.post(`/${id}`, user)).data;
@@ -13,7 +13,6 @@ class CartService {
         return (await this.api.post("/", data)).data;
     }
     async deleteAll(user) {
-        console.log(user)
         return (await this.api.delete(`/order/${user}`)).data;
     }
     async update(id, data) {

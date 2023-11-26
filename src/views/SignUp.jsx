@@ -1,9 +1,11 @@
 import React from "react";
+import { useState,useContext , useEffect} from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import userService from "../services/user.service";
 import { notify } from "../auth.action";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignUp(){
     const navigate = useNavigate()
@@ -11,6 +13,7 @@ function SignUp(){
         initialValues: {
             fullname: "",
             accname: "",
+            phone: "",
             pass: "",
             confirm_pass: ""
         },
@@ -21,12 +24,15 @@ function SignUp(){
             .required("Required!"),
           accname: Yup.string()
             .required("Required!"),
+            phone: Yup.string()
+            .required("Required!"),
           pass: Yup.string()
             .min(5, "Minimum 5 characters")
             .required("Required!"),
           confirm_pass: Yup.string()
             .oneOf([Yup.ref("pass")], "Password's not match")
-            .required("Required!")
+            .required("Required!"),
+            
         }),
         onSubmit: values => {
             const check= async ()=>{
@@ -47,13 +53,14 @@ function SignUp(){
             check()
           }
       });
+
     return(
         <>
         <div id="signup">
             <div className="wrapper">
                 <div class="title-text">
                     <div class="title signup"> Signup Form </div>
-             </div>
+                </div>
                 <form action="#" class="signup" onSubmit={formik.handleSubmit}>
                     <div class="field">
                         <input type="text" 
@@ -72,6 +79,15 @@ function SignUp(){
                                 className={formik.errors.accname && formik.touched.accname && "error_input"}/>
                          {formik.errors.accname && formik.touched.accname && (
                             <p className="form_error">{formik.errors.accname}</p>
+                        )}
+                    </div>
+                    <div class="field">
+                        <input type="text" name="phone" placeholder="Phone" 
+                                value={formik.values.phone}
+                                onChange={formik.handleChange} 
+                                className={formik.errors.phone && formik.touched.phone && "error_input"}/>
+                         {formik.errors.phone && formik.touched.phone && (
+                            <p className="form_error">{formik.errors.phone}</p>
                         )}
                     </div>
                     <div class="field">
@@ -98,7 +114,7 @@ function SignUp(){
                 </form>
             </div>
         </div>
-    </>
+        </>
     )
 }
 export default SignUp

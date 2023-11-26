@@ -35,9 +35,9 @@ function Home({books}){
                           <div className="carousel-item">
                             <img src="https://img.freepik.com/free-psd/world-book-day-banner-template_23-2149323909.jpg?w=2000" className="d-block w-100" alt="..."></img>
                           </div>
-                          <div className="carousel-item">
+                          {/* <div className="carousel-item">
                             <img src="https://www.bookswagon.com/images/bannerimages/82_inr.jpg?v=1.4" className="d-block w-100" alt="..."></img>
-                          </div>
+                          </div> */}
                         </div>
                         <button className="carousel-control-prev  carousel-control-prev-next-icon" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                           <i className="fa-solid fa-chevron-left carousel-control-icon"></i>
