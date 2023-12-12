@@ -31,7 +31,7 @@ class UserService {
         return (await this.api.post(`/${data.id}`, data)).data;
     }
     async update(data) {
-        return (await this.api.put(`/${data.id}`, data)).data;
+        return (await this.api.put(`/${data.idUser}`, data)).data;
     }
 }
 export default new UserService();

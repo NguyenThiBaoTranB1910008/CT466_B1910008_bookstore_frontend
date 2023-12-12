@@ -1,6 +1,7 @@
 import React from "react";
 import addressService from "../../services/address.service";
 import { useState, useEffect} from "react";
+import { notify } from "../../auth.action";
 
 function AccountAddress({setChoose, user, editAddress}){
     const [address, setAddress] = useState([])
@@ -15,11 +16,14 @@ function AccountAddress({setChoose, user, editAddress}){
             }
         }
         fetchOrder()
-    },[address])
+    },[])
 
     const removeAddress = async (id) =>{
         try{
-            const apiaddress = await addressService.delete(id)
+            await addressService.delete(id)
+            const apiaddress = await addressService.get(user.idUser)
+            setAddress(apiaddress)
+            notify('success',"Xóa địa chỉ đặt hàng thành công")
         }
         catch(error){
             console.log(error);
@@ -62,10 +66,13 @@ function AccountAddress({setChoose, user, editAddress}){
                                         className='admin-edit-button mx-2'>
                                         <i class="fa-solid fa-pen"></i>
                                     </div>
+                                    {
+                                        locate.default_value === 1 ? "" :
                                     <div
                                         className='admin-delete-button' onClick = {()=> removeAddress(locate.id)}>
                                         <i className='fas fa-trash'></i>
                                     </div>
+                                    }
                             </div>
                         </div>
                     </>

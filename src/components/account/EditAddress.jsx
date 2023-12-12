@@ -6,9 +6,8 @@ import { notify } from "../../auth.action";
 import { useState, useContext , useEffect} from "react";
 import axios from "axios";
 import Context from "../../store/Context";
-import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
-function NewAddress({setChoose, user}){
+function EditAddress({setChoose, user, locate}){
     const token = 'f940af7b-7358-11ee-a59f-a260851ba65c';
     const shopID = 4655800;
     const apiProvince = 'https://online-gateway.ghn.vn/shiip/public-api/master-data/province';
@@ -22,16 +21,15 @@ function NewAddress({setChoose, user}){
     const [idDistrict, setIdDistrict] = useState([]);
     const [inputs, setInputs] = useState([]);
     const [state, dispatch] = useContext(Context) 
-    const [isDefault, setIsDefault] = useState();
     
     const formik = useFormik({
         initialValues: {
-            name: user.fullname ,
-            phone: user.phone,
-            address: "",
-            city: "",
-            district:  "",
-            ward:  ""
+            name: locate.name ? locate.name : user.fullname ,
+            phone: locate.phone ? locate.phone : user.phone,
+            address: locate.address ? locate.address : "",
+            city: locate.city ? locate.cityId : "",
+            district: locate.district ? locate.districtId : "",
+            ward: locate.ward ? locate.wardId : ""
         },
         validationSchema: Yup.object({
             name:  Yup.string().required("Name is required"),
@@ -76,35 +74,19 @@ function NewAddress({setChoose, user}){
                     }
                 }
             })
-            const addAddress = async () =>{
-                    try{
-                        await addressService.create(myaddress)
-                        notify('success',"Thêm địa chỉ đặt hàng thành công")
-                        setChoose('address')
-                    }
-                        catch(error){
-                        console.log(error);
-                    }
-            }
-            addAddress()
+            const updateAddress = async () =>{
+                try{
+                    await addressService.update(locate.id,myaddress)
+                    notify('success',"Cập nhật địa chỉ đặt hàng thành công")
+                    setChoose('address')
+                }
+                    catch(error){
+                    console.log(error);
+                }
+        }
+        updateAddress()
         }
     });
-
-    useEffect(() => {
-        const isDefault = async() =>{
-            try{
-                const rs = await addressService.isDefault()
-                if(rs){
-                    document.getElementById('default-address').checked = true
-                    document.getElementById('default-address').disabled = true
-                }
-            }
-            catch(error){
-                console.log(error);
-            }
-        }
-        isDefault()
-    }, []);
 
     const getListProvince = () => {
         axios.get(
@@ -167,6 +149,15 @@ function NewAddress({setChoose, user}){
 
     useEffect(() => {
         getListProvince();
+        setIdProvince(locate.cityId);
+        getListDistrict(locate.cityId)
+        getListWard(locate.districtId)
+        setIdDistrict(locate.districtId)
+        setIdWard(locate.wardId)
+        if(locate.default_value){
+            document.getElementById('default-address').checked = true;
+            document.getElementById('default-address').disabled = true;
+        }
     }, []);
     return(
         <>
@@ -250,7 +241,7 @@ function NewAddress({setChoose, user}){
                         </select> 
                     </div>
                     <div className="mt-3">
-                        <input type="checkbox" name="" id="default-address" /> Lưu thành địa chỉ mặc định
+                        <input type="checkbox" name="" id="default-address"/> Lưu thành địa chỉ mặc định
                     </div>
                     <div className="right">
                         <button className="app-button" >Lưu</button>
@@ -262,4 +253,4 @@ function NewAddress({setChoose, user}){
     )
 }
 
-export default NewAddress
+export default EditAddress

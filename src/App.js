@@ -40,6 +40,7 @@ function App() {
               <Route path="/review" element={<Review/>}/>
               <Route path="/admin" element={<AdminPage/>}/>
               <Route path="/admin/editbook" element={<AdminBookDetail/>}/>
+              <Route path="/admin/editbook" element={<AdminBookDetail/>}/>
            </Routes> 
          </>
   );

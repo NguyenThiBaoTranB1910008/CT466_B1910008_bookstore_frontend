@@ -115,7 +115,7 @@ function Caterory(){
                     <div className="listinfo">
                         <div className="">
                             {search ? <span>Kết quả tìm kiếm với từ khóa "<b>{search}</b>":</span> : ""}
-                            <div>Số lượng: {books.length} sản phẩm</div>
+                            {/* <div>Số lượng: {books.length} sản phẩm</div> */}
                         </div>
                         <select id="order" class="form-select" onChange={()=>interChangeSort()}>
                                 <option value="" >Sắp xếp</option>

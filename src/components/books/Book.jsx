@@ -12,8 +12,10 @@ function Book({prop}){
                             <span className="notify">Hết Hàng</span>
                         </div>}
                         <div className="book-info">
-                        <p className="book-name pt-3">{prop.title}</p>
-                        <p className="book-author">{prop.author}</p>
+                            <p className="book-name pt-2">{
+                                (prop.title.length > 33) ?  prop.title.substring(0,33) + "..." : prop.title
+                            }</p>
+                            <p className="book-author pb-1">{prop.author}</p>
                         </div>
                         <p className="book-price">{currencyFormat(prop.price)}</p>
                 </Link>

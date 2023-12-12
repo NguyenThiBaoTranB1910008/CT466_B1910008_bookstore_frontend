@@ -21,6 +21,13 @@ function Navigation ({adminChoose, setAdminChoose}){
                 <img src="./name1.png" alt="Page By Page" className="admin-logoword" />
             </div>
             <ul className='admin-list'>
+                <div onClick={()=>setAdminChoose('statistic')}>
+                <li className={adminChoose!=="statistic" ? "admin-list-item" : "admin-list-item admin-selected"} 
+                    onClick={() => setAdminChoose("statistic")} >
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Tổng quan</span>
+                </li>
+                    </div>
                 <div onClick={()=>setAdminChoose('book')}>
                 <li className={adminChoose!=="book" && adminChoose!=="edit" ? "admin-list-item" : "admin-list-item admin-selected"} 
                     onClick={() => setAdminChoose("book")} >
@@ -40,6 +47,13 @@ function Navigation ({adminChoose, setAdminChoose}){
                         onClick = {() =>setAdminChoose("order")}>
                         <i class="fa-solid fa-bag-shopping"></i>
                         <span>Đơn hàng</span>
+                    </li>
+                    </div>
+                    <div onClick={()=>setAdminChoose('comment')}>
+                    <li className={adminChoose!=="comment" ? "admin-list-item" : "admin-list-item admin-selected"}
+                        onClick = {() =>setAdminChoose("comment")}>
+                        <i class="fa-solid fa-pen"></i>
+                        <span>Bình luận</span>
                     </li>
                     </div>
                     <li className="admin-list-item"

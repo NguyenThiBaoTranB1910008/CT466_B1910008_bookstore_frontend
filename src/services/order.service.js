@@ -27,6 +27,14 @@ class OrderService {
     async reviewBook(data) {
         return (await this.api.post("/getreview", data)).data;
     }
+
+    async statistic(data) {
+        return (await this.api.post("/statistic", data)).data;
+    }
+
+    async detailstatistic(data) {
+        return (await this.api.post("/detailstatistic", data)).data;
+    }
     
     // async deleteAll() {
     //     return (await this.api.delete("/")).data;

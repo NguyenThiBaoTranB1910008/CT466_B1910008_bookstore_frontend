@@ -103,10 +103,11 @@ function Review({idReview}){
             console.log(error);
         }
     }
+    
     useEffect(()=>{
         fetchOrder()
     },[])
-    
+
     return(
         <>
         {   orders.length === 0 ? "" : 
@@ -115,11 +116,12 @@ function Review({idReview}){
                 <h3 className="title">Địa chỉ nhận hàng</h3>
                 <p>
                     <p>
-                    <span>{orders[0].firstname} </span>
-                    <span>{orders[0].lastname}</span>
+                    <span>{orders[0].order_address.name} </span>
                     </p>
-                    <p>{orders[0].phone}</p>
-                    <p>{orders[0].address}</p>
+                    <p>{orders[0].order_address.phone}</p>
+                    <p>
+                        {orders[0].order_address.address + ", " + orders[0].order_address.ward + ", " + orders[0].order_address.district + ", " + orders[0].order_address.city}
+                    </p>
                 </p>
             </div>
             <br />
@@ -160,14 +162,20 @@ function Review({idReview}){
                                 <span className="beween">
                                     <span> 
                                         <p className="cart-item-price">{currencyFormat(detail.price)}</p>
-                                        </span>
+                                    </span>
                                     {
-                                    detail.review === 0 ?
-                                    <button className="boxsale-button-cart write-comment">
-                                    <i class="fa-solid fa-pen"></i>
-                                        <span className="mx-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Viết đánh giá</span>
-                                    </button>
-                                    : <span className="review-done login-text">Đã đánh giá</span>}
+                                        orders[0].status == "shipped" ? 
+                                        <>
+                                            {
+                                            detail.review === 0 ?
+                                            <button className="boxsale-button-cart write-comment">
+                                            <i class="fa-solid fa-pen"></i>
+                                                <span className="mx-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Viết đánh giá</span>
+                                            </button>
+                                            : <span className="review-done login-text">Đã đánh giá</span>
+                                            }
+                                        </> : ""
+                                    }
                                 </span>
                             </div>
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -186,7 +186,6 @@ color: #131212;
 font-size: 16px;
 font-weight: 800;
 margin: 0;
-height: 90px;
 }
 
 .book-info{
@@ -1110,6 +1109,11 @@ textarea{
   align-items: center;
 }
 
+.list-book{
+  display: flex;
+  align-items: center;
+}
+
 
 .appmodal{
   position: relative;
@@ -1117,7 +1121,6 @@ textarea{
   background-color: #fff;
     /* max-width: 500px; */
   width: 500px;
-  height: 300px;
   z-index: 1000;
 }
 
@@ -1166,6 +1169,24 @@ textarea{
 
 .none{
   display: none;
+}
+
+.checkout_choose_address{
+  width: 100%;
+  padding: 20px;
+  border-bottom: 1px solid #0060ae;
+}
+
+.checkout_choose_address_btn{
+  border-bottom: 1px solid #0060ae;
+  color: #0060ae;
+  font-weight: 800;
+  margin-top: 30px;
+  width: fit-content;
+}
+
+.modal-body form{
+  width: 100%;
 }
 
 .detail-salebox.outofstock p{
@@ -1283,7 +1304,7 @@ textarea{
   font-size: 22px;
 }
 
-.detail-salebox, .detailbook-info, .detail-comment, .order-address, .user-address, .new-adress{
+.detail-salebox, .detailbook-info, .detail-comment, .order-address, .user-address, .new-adress, .checkout_address{
   width: 100%;
   font-family: Nunito,serif;
   padding: 20px;
@@ -1591,6 +1612,17 @@ button.boxsale-button-cart{
   margin-right: 10px;
 }
 
+.user-overview .cus-comment img{
+  width: 35px;
+  height: 35px;
+  margin-right: 3px;
+}
+
+/* .user-overview .modal-body{
+  width: 800px;
+  height: 600px;
+} */
+
 .detail-sum img{
   width: 16px;
   margin-right: 5px;
@@ -1606,6 +1638,11 @@ button.boxsale-button-cart{
 
 .order-detail-item .cart-item-img{
   flex-basis: 15%;
+}
+
+.filter-date{
+  display: flex;
+
 }
 
 .order-detail-item .cart-item-name-price{
@@ -1656,4 +1693,8 @@ button.boxsale-button-cart{
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
+}
+
+.show-img.btn-close{
+  font-size: 28px;
 }

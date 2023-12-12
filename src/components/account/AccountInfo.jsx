@@ -7,10 +7,11 @@ import { useState,useContext , useEffect} from "react";
 import axios from "axios";
 import AccountAddress from "./AccountAddress";
 
-function AccountInfo({user}){
+function AccountInfo({user, fetchData}){
     const formik = useFormik({
         initialValues: {
             fullname: user.fullname,
+            phone: user.phone,
             pass: user.pass,
             confirm_pass: "",
         },
@@ -18,6 +19,9 @@ function AccountInfo({user}){
             fullname: Yup.string()
             .min(2, "Mininum 2 characters")
             .max(15, "Maximum 20 characters")
+            .required("Required!"),
+            phone: Yup.string()
+            .min(10, "Minimum 10 characters")
             .required("Required!"),
             pass: Yup.string()
             .min(5, "Minimum 5 characters")
@@ -29,11 +33,15 @@ function AccountInfo({user}){
         onSubmit: values => {
             const update= async () =>{
                 try{
-                    const newuser= {...user, 
+                    var newuser= {...user, 
                         fullname: values.fullname,
-                        pass:values.pass} 
-                    await userService.update(newuser)
+                        phone: values.phone,
+                        pass:values.pass
+                    }
+                    newuser = await userService.update(newuser)
+                    fetchData()
                     notify("success","Cập nhật thông tin người dùng thành công")
+                    values.confirm_pass = ""
                 }
                 catch(error){
                     console.log(error);
@@ -58,6 +66,15 @@ function AccountInfo({user}){
                             <p className="form_error">{formik.errors.fullname}</p>)}
                 </div>
                 <div class="field">
+                    <input type="text" 
+                            name="phone" placeholder="Phone"
+                            value={formik.values.phone}
+                            onChange={formik.handleChange} 
+                            className={formik.errors.phone && formik.touched.phone && "error_input"}/>
+                    {formik.errors.phone && formik.touched.phone && (
+                            <p className="form_error">{formik.errors.phone}</p>)}
+                </div>
+                <div class="field">
                     <input type="password" name="pass" placeholder="Password" 
                             value={formik.values.pass}
                             onChange={formik.handleChange} 
@@ -73,6 +90,9 @@ function AccountInfo({user}){
                             {formik.errors.confirm_pass && formik.touched.confirm_pass && (
                                     <p className="form_error">{formik.errors.confirm_pass}</p>)}
                         </div>
+                <div className="right">
+                        <button className="app-button" type="submit">Lưu</button>
+                </div>
                 </div>
         </form>
         </div>

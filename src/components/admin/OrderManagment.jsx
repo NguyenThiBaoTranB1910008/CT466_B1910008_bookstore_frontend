@@ -33,6 +33,7 @@ function OrderManagment(){
         fetchOrder()
     },[filter])
 
+
     const openDetail = (id) =>{
         var detail = document.getElementsByClassName(`${id}`)
         if(detail[0].style.maxHeight==='0px'){
@@ -128,12 +129,13 @@ function OrderManagment(){
                 </div>
                 {
                     orders.map((order, index)=>(
-                        // <div className="">
                         <div className="order-item row">
                             <div className="row order-info">
                                 <div className="col-1">{index+1}</div>
                                 <div className="col-1">{order.idUser}</div>
-                                <div className="col-2">{order.address}</div>
+                                <div className="col-2">
+                                    {order.order_address.address + ", " + order.order_address.ward + ", " + order.order_address.district + ", " + order.order_address.city}
+                                </div>
                                 <div className="col-2">{order.dayOrder}</div>
                                 <div className="col-2">{order.note}</div>
                                 <div className="col-2 order-status">{status[order.status]}</div>

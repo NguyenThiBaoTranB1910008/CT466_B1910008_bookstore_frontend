@@ -30,6 +30,9 @@ class ProductService {
     async order(id, data) {
         return (await this.api.post(`/${id}`, data)).data;
     }
+    async isUnique(data) {
+        return (await this.api.post("/new", data)).data;
+    }
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
     }

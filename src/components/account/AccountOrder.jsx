@@ -4,11 +4,14 @@ import { currencyFormat, notify } from "../../auth.action"
 import EmptyCart from "../cart/EmptyCart"
 import moment from 'moment'
 import { Link} from "react-router-dom"
+import { useContext } from "react"
+import Context from "../../store/Context"
 
 function MyOrder({idfocus, setIdReview, setChoose}){
     const [orders, setOrder] = useState([])
     const [orderdetails, setOrderDetail] = useState({})
-    const [filter, setFilter] = useState({changeData: false, id: localStorage.getItem('loginId')})
+    const [state,dispatch] = useContext(Context)
+    const [filter, setFilter] = useState({changeData: false, id: state.loginId})
     const status ={
         wait: "Chờ xác nhận",
         process:"Đang giao",
@@ -108,8 +111,10 @@ function MyOrder({idfocus, setIdReview, setChoose}){
                         <div className={(idfocus!==0 && idfocus===order.id) ? "order-item row focus" : "order-item row"}>
                             <div className="row order-info">
                                 <div className="col-1">{index+1}</div>
-                                <div className="col-1">{order.firstname}</div>
-                                <div className="col-3">{order.address}</div>
+                                <div className="col-1">{order.order_address.name}</div>
+                                <div className="col-3">
+                                    {order.order_address.address + ", " + order.order_address.ward + ", " + order.order_address.district + ", " + order.order_address.city}
+                                </div>
                                 <div className="col-2">{order.dayOrder}</div>
                                 <div className="col-2">{order.note}</div>
                                 <div className="col-2"> {status[order.status]}
@@ -142,6 +147,7 @@ function MyOrder({idfocus, setIdReview, setChoose}){
                                         <span>Tổng đơn hàng:</span>
                                         <span className="px-2">{currencyFormat(order.total)}</span>
                                     </span>
+                                    <span style = {{ flexDirection: "row", display: "flex"}}>
                                     {
                                         order.status === "process" &&
                                         <div className="admin-edit-button mt-2"
@@ -154,15 +160,10 @@ function MyOrder({idfocus, setIdReview, setChoose}){
                                         onClick={() => cancel(order.id)}>Hủy đơn
                                         </div> 
                                     }
-                                    {
-                                        order.status === "shipped" &&
-                                             <div className="admin-add-button mt-2" onClick={()=>{setIdReview(order.id); setChoose("review")}}>
-                                           Đánh giá
-                                            </div> 
-                                        // <div className="admin-add-button mt-2"
-                                        // onClick={() => cancel(order.id)}>Đánh giá
-                                        // </div> 
-                                    }
+                                        <div className="admin-add-button mx-2 mt-2" onClick={()=>{setIdReview(order.id); setChoose("review")}}>
+                                                Chi tiết
+                                        </div>
+                                    </span>
                                 </div>
                                 </div>
                             </div>

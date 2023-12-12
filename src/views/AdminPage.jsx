@@ -5,7 +5,9 @@ import BookManagement from '../components/admin/BookManagement';
 import OrderManagment from '../components/admin/OrderManagment';
 import UserManagement from '../components/admin/UserManagement';
 import AdminBookDetail from '../components/admin/AdminBookDetail';
+import StatisticManagment from '../components/admin/StatisticManagement';
 import Navigation from '../components/admin/Navigation';
+import CommentManagement from '../components/admin/CommentManagement';
 
 function AdminPage(){
     const [adminChoose, setAdminChoose] = useState("book")
@@ -39,6 +41,9 @@ function AdminPage(){
                     </div>
                 </div>
                 {
+                    adminChoose === 'statistic' && <StatisticManagment/>
+                }
+                {
                     adminChoose === 'book' && <BookManagement setEditBook={setEditBook} setAdminChoose={setAdminChoose}/>
                 }
                 {
@@ -46,6 +51,9 @@ function AdminPage(){
                 }
                 {
                     adminChoose === 'order' && <OrderManagment/>
+                }
+                {
+                    adminChoose === 'comment' && <CommentManagement/>
                 }
                 {
                     adminChoose === 'edit' && <AdminBookDetail editbook={editbook} setAdminChoose={setAdminChoose}/>

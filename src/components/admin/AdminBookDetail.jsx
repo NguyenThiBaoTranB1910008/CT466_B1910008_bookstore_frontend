@@ -59,14 +59,14 @@ function AdminBookDetail({editbook, setAdminChoose}){
             header: { 'content-type': 'multipart/form-data' }
         }
         uploadImage(formData,config)
-        if(book != null) 
-            formik.values.imageUrl = `http://localhost:3001/images/${photo.name}`
+        formik.values.imageUrl = `http://localhost:3001/images/${photo.name}`
     }
 
     const updateBook = async (values) =>{
         try{
            await productService.update(values.id, values)
            notify('success',"Cập nhật sản phẩm thành công")
+           setAdminChoose("book")
         }
         catch(error){
             console.log(error);
@@ -75,8 +75,15 @@ function AdminBookDetail({editbook, setAdminChoose}){
 
     const addBook = async (values) =>{
         try{
+          var isUnique =  await productService.isUnique({title: values.title})
+          if(!isUnique){
+            notify('error',"Sản phẩm đã có trong kho. Vui lòng nhập sản phẩm khác")
+          }
+          else{
            await productService.create(values)
            notify('success',"Thêm sản phẩm thành công")
+           setAdminChoose("book")
+          }
         }
         catch(error){
             console.log(error);
@@ -107,7 +114,6 @@ function AdminBookDetail({editbook, setAdminChoose}){
             if(selectedImage.changeUrl)
                 uploadFile()
             book ? updateBook(values) : addBook(values)
-            setAdminChoose("book")
         }
     });
 
@@ -188,12 +194,12 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                         onChange={formik.handleChange} 
                                         className={formik.errors.releaseDate && formik.touched.releaseDate && "error_input"}/> 
                             {formik.errors.releaseDate && formik.touched.releaseDate && (
-                                    <p className="form_error">{formik.errors.releaseDate}</p>
+                                <p className="form_error">{formik.errors.releaseDate}</p>
                                 )}
                         </div>
                     </div>
                     <div className="row">
-                        <div class="field col-6">
+                        {/* <div class="field col-6">
                                 <input type="text" class="form-control" name="brand" 
                                             placeholder="Nhà xuất bản"  value={formik.values.brand}
                                             onChange={formik.handleChange} 
@@ -201,7 +207,20 @@ function AdminBookDetail({editbook, setAdminChoose}){
                                 {formik.errors.brand && formik.touched.brand && (
                                         <p className="form_error">{formik.errors.brand}</p>
                                     )}
-                        </div>
+                        </div> */}
+                        <div class=" col-6">
+                            <select class="form-select form-control field" name="brand" 
+                                    value={formik.values.brand}
+                                    onChange={formik.handleChange}>
+                                <option value="" selected={ formik.values.brand==="" ? false : true}>Nhà xuất bản</option>
+                                <option value="NXB Kim Đồng" selected={ formik.values.brand==="NXB Kim Đồng" ? false : true}>NXB Kim Đồng</option>
+                                <option value="NXB Trẻ" selected={ formik.values.brand==="NXB Trẻ" ? false : true}>NXB Trẻ</option>
+                                <option value="NXB Giáo dục" selected={ formik.values.brand==="NXB Giáo dục" ? false : true}>NXB Giáo dục</option>
+                                <option value="NXB Đại học Cần Thơ" selected={ formik.values.brand==="NXB Đại học Cần Thơ" ? false : true}>NXB Đại học Cần Thơ</option>
+                                <option value="NXB Phương Nam" selected={ formik.values.brand==="NXB Phương Nam" ? false : true}>NXB Phương Nam</option>
+                                <option value="NXB Văn Học" selected={ formik.values.brand==="NXB Văn Học" ? false : true}>NXB Văn Học</option>
+                            </select>  
+                            </div> 
                         <div class="field col-6">
                                 <input type="text" class="form-control" name="language" 
                                             placeholder="Ngôn ngữ"  value={formik.values.language}

@@ -74,9 +74,11 @@ function BookManagement({setEditBook, setAdminChoose}){
                     <div>
                     { books.map((book, index) => (
                         <div key={index} className="order-item row py-1">
-                            <div className='col-5'>
-                                <img  src={book.imageUrl} className="admin-book-img order-detail-img"></img> 
-                                {book.title}
+                            <div className='col-5 row list-book'>
+                                <img  src={book.imageUrl} className="admin-book-img order-detail-img col-3"></img> 
+                                <div className='col-9'>
+                                 {book.title}
+                                </div>
                             </div>
                             <div className='col-2'>
                                 <span className='admin-book-price mr-2'>

@@ -60,6 +60,8 @@ function AppHeader() {
                           Hello, {userName}
                         </div>
                         <Link to="/myorder" state={{cate: "order"}}><li>Đơn hàng của tôi</li></Link>
+                        <Link to="/myorder" state={{cate: "comment"}}><li>Bình luận của tôi </li></Link>
+                        <Link to="/myorder" state={{cate: "address"}}><li>Sổ địa chỉ</li></Link>
                         <Link to="/myorder" state={{cate: "announment"}}><li className="">
                           <span>Thông báo</span>  
                           {state.newNotify.length !== 0 && <span className="newNumber mx-3 my-1"></span>}</li>

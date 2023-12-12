@@ -6,7 +6,9 @@ import { notify } from "../auth.action"
 import AccountInfo from "../components/account/AccountInfo"
 import Announment from "../components/account/Announment";
 import AccountAddress from "../components/account/AccountAddress";
+import AccountComment from "../components/account/AccountComment";
 import NewAddress from "../components/account/NewAddress";
+import EditAddress from "../components/account/EditAddress";
 import MyOrder from "../components/account/AccountOrder";
 import Review from "../views/Review";
 import AppHeader from "../components/common/header/AppHeader";
@@ -26,16 +28,16 @@ function Account(){
         setIdfocus(id)
         setChoose("order")
     }
+    const fetchData = async () =>{
+    try{
+        var apiuser = await userService.getById(state.loginId)
+        setUser(apiuser)
+    }
+    catch(error){
+        console.log(error);
+    }
+    }
     useEffect(()=>{
-        const fetchData = async () =>{
-        try{
-            var apiuser = await userService.getById(state.loginId)
-            setUser(apiuser)
-        }
-        catch(error){
-            console.log(error);
-        }
-        }
         fetchData()
     },[])
 
@@ -49,7 +51,7 @@ function Account(){
 
     function editAddress(locate){
         setLocate(locate)
-        setChoose("newaddress")
+        setChoose("editaddress")
     }
 
     return(
@@ -64,6 +66,10 @@ function Account(){
                                 className={(choose==="order" || choose === "review") && "userfocus"}>
                                 <span><i class="fa-solid fa-bag-shopping"></i>Đơn hàng</span>
                             </li>
+                            <li onClick={() => {setChoose("comment"); setIdfocus(0)}}
+                                className={(choose==="comment") && "userfocus"}>
+                                <span><i class="fa-solid fa-pen"></i>Bình luận</span>
+                            </li>
                             <li onClick={()=>{setChoose("announment"); setIdfocus(0)}}
                                 className={choose==="announment" && "userfocus"}>
                                 <span><i class="fa-solid fa-bell"></i>Thông báo</span>
@@ -73,7 +79,7 @@ function Account(){
                                 className={choose==="info" && "userfocus"}>
                                 <span><i class="fa-solid fa-info"></i>Thông tin tài khoản</span></li>
                             <li onClick={()=>{setChoose("address"); setIdfocus(0)}}
-                                className={choose==="address" && "userfocus"}>
+                                className={(choose==="address" || choose === "newaddress" || choose === "editaddress") && "userfocus"}>
                                 <span><i class="fa-solid fa-location-dot"></i>Sổ địa chỉ</span>
                             </li>
                             <li onClick={handlelogout}><span><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</span></li>
@@ -87,7 +93,7 @@ function Account(){
                     choose === "announment" && <Announment setChoose={watchDetail}/>
                 }
                 {
-                    choose === "info" && <AccountInfo user={user}/>
+                    choose === "info" && <AccountInfo user={user} fetchData = {fetchData}/>
                 }
                 {
                     choose === "review" && <Review idReview={idReview}/>
@@ -96,7 +102,13 @@ function Account(){
                     choose === "address" && <AccountAddress setChoose={setChoose} user = {user} editAddress={editAddress}/>
                 }
                 {
-                    choose === "newaddress" && <NewAddress setChoose={setChoose}  user={user} locate={locate}/>
+                    choose === "newaddress" && <NewAddress setChoose={setChoose}  user={user}/>
+                }
+                {
+                    choose === "editaddress" && <EditAddress setChoose={setChoose}  user={user} locate={locate}/>
+                }
+                {
+                    choose === "comment" && <AccountComment/>
                 }
                 </div>
             </div>

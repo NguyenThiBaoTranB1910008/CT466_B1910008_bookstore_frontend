@@ -12,6 +12,12 @@ class AddressService {
     async create(data) {
         return (await this.api.post("/", data)).data;
     }
+    async update(id,data) {
+        return (await this.api.post(`/${id}`, data)).data;
+    }
+    async isDefault() {
+        return (await this.api.get('/isDefault')).data;
+    }
 }
 
 export default new AddressService();
